@@ -1,4 +1,4 @@
-# MoviePlanet
+# FILM - Fall In Love with Movie
 
 영화 리뷰 서비스입니다.
 
