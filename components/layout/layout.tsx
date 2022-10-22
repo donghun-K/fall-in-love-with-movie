@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { Fragment } from 'react';
-import NavBar from './nav-bar';
+import NavBar from './header/nav-bar';
 import Grid from '@mui/material/Grid';
 interface layoutProps {
   children?: JSX.Element;

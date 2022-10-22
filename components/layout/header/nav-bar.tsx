@@ -1,15 +1,9 @@
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Grid,
-  IconButton,
-  Button,
-} from '@mui/material';
+import { AppBar, Toolbar, Typography, Grid, Button } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import Image from 'next/image';
 import { Box } from '@mui/system';
+import SearchBar from './search-bar';
 
 const NavBar = () => {
   return (
@@ -37,7 +31,27 @@ const NavBar = () => {
               height={60}
               alt='FILM'
             />
-            <Box></Box>
+
+            <Box>
+              <Button
+                variant='text'
+                sx={{
+                  '&:hover': { color: 'primary.light' },
+                }}
+              >
+                Log In
+                <LoginIcon fontSize='large' />
+              </Button>
+              <Button
+                variant='text'
+                sx={{
+                  '&:hover': { color: 'primary.light' },
+                }}
+              >
+                Sign Up
+                <HowToRegIcon fontSize='large' />
+              </Button>
+            </Box>
           </Toolbar>
         </Grid>
         <Grid item xs={2} />
