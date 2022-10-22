@@ -40,7 +40,6 @@ const NavBar = () => {
             <Box></Box>
           </Toolbar>
         </Grid>
-
         <Grid item xs={2} />
       </Grid>
     </AppBar>
