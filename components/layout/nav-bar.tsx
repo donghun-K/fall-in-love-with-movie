@@ -15,7 +15,7 @@ const NavBar = () => {
   return (
     <AppBar
       position='sticky'
-      color='secondary'
+      color='nav'
       sx={{
         display: 'flex',
         height: '80px',
