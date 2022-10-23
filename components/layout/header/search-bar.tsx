@@ -5,30 +5,30 @@ import { useState } from 'react';
 const SearchBar = () => {
   const [textFieldFocused, setTextFieldFocused] = useState(false);
 
-  const focusSx = textFieldFocused
+  const focusedPaperSx = textFieldFocused
     ? {
         backgroundColor: 'secondary.main',
         width: 250,
       }
     : {};
+
+  const paperSx = {
+    backgroundColor: 'secondary.dark',
+    p: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    width: 180,
+    mr: '20px',
+    transition: '0.3s',
+    '&:hover': {
+      backgroundColor: 'secondary.main',
+      width: 250,
+    },
+    ...focusedPaperSx,
+  };
+
   return (
-    <Paper
-      component='form'
-      sx={{
-        backgroundColor: 'secondary.dark',
-        p: '2px 4px',
-        display: 'flex',
-        alignItems: 'center',
-        width: 180,
-        mr: '20px',
-        transition: '0.3s',
-        '&:hover': {
-          backgroundColor: 'secondary.main',
-          width: 250,
-        },
-        ...focusSx,
-      }}
-    >
+    <Paper component='form' sx={paperSx}>
       <InputBase
         sx={{
           ml: 1,
