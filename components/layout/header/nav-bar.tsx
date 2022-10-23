@@ -27,12 +27,18 @@ const NavBar = () => {
           >
             <Image
               src={'/images/logo/logo1.png'}
-              width={163}
+              width={160}
               height={60}
               alt='FILM'
             />
 
-            <Box>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+              }}
+            >
+              <SearchBar />
               <Button
                 variant='text'
                 sx={{
