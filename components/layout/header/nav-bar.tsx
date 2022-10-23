@@ -6,6 +6,12 @@ import { Box } from '@mui/system';
 import SearchBar from './search-bar';
 
 const NavBar = () => {
+  const buttonSx = {
+    width: 115,
+    height: 50,
+    '&:hover': { color: 'primary.light' },
+  };
+
   return (
     <AppBar
       position='sticky'
@@ -39,22 +45,16 @@ const NavBar = () => {
               }}
             >
               <SearchBar />
-              <Button
-                variant='text'
-                sx={{
-                  '&:hover': { color: 'primary.light' },
-                }}
-              >
-                Log In
+              <Button variant='text' sx={buttonSx}>
+                <Typography variant='subtitle2' pt={2} mr={0.5}>
+                  Log In
+                </Typography>
                 <LoginIcon fontSize='large' />
               </Button>
-              <Button
-                variant='text'
-                sx={{
-                  '&:hover': { color: 'primary.light' },
-                }}
-              >
-                Sign Up
+              <Button variant='text' sx={buttonSx}>
+                <Typography variant='subtitle2' pt={2} mr={0.5}>
+                  Sign Up
+                </Typography>
                 <HowToRegIcon fontSize='large' />
               </Button>
             </Box>

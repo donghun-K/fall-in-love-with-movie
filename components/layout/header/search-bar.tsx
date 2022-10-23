@@ -17,6 +17,7 @@ const SearchBar = () => {
     p: '2px 4px',
     display: 'flex',
     alignItems: 'center',
+    height: 50,
     width: 180,
     mr: '20px',
     transition: '0.3s',
