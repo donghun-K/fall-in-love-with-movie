@@ -13,7 +13,7 @@ const Layout: FC<layoutProps> = ({ children }) => {
       <Grid
         container
         spacing={3}
-        sx={{ background: '#000000', minHeight: '100vh' }}
+        sx={{ background: '#000000', minHeight: 'calc(100vh - 56px)' }}
       >
         <Grid item xs={2} />
         <Grid item xs={8}>
