@@ -20,6 +20,7 @@ const NavBar = () => {
         display: 'flex',
         height: '80px',
         justifyContent: 'center',
+        boxShadow: (theme) => `0 10px 10px ${theme.palette.nav.main}`,
       }}
     >
       <Grid container spacing={3}>
