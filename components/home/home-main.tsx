@@ -39,9 +39,9 @@ const HomeMain = () => {
           >
             영화 별점 평가 서비스
           </Typography>
-          <Typography
-            variant='h4'
+          <Box
             sx={{
+              fontSize: '2rem',
               color: 'white',
               fontWeight: '700',
             }}
@@ -62,7 +62,7 @@ const HomeMain = () => {
               M
             </Typography>
             oney
-          </Typography>
+          </Box>
         </Box>
 
         <Button
