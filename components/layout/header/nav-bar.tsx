@@ -1,13 +1,22 @@
-import { AppBar, Toolbar, Typography, Grid, Button } from '@mui/material';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Grid,
+  Button,
+  useMediaQuery,
+} from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import Image from 'next/image';
 import { Box } from '@mui/system';
 import SearchBar from './search-bar';
+import theme from '../../../src/theme';
 
 const NavBar = () => {
+  const isUpLg = useMediaQuery(theme.breakpoints.up('lg'));
+
   const buttonSx = {
-    width: 115,
     height: 50,
     '&:hover': { color: 'primary.light' },
   };
@@ -47,15 +56,19 @@ const NavBar = () => {
             >
               <SearchBar />
               <Button variant='text' sx={buttonSx}>
-                <Typography variant='subtitle2' pt={2} mr={0.5}>
-                  Log In
-                </Typography>
+                {isUpLg && (
+                  <Typography variant='subtitle2' pt={2} mr={0.5}>
+                    Log In
+                  </Typography>
+                )}
                 <LoginIcon fontSize='large' />
               </Button>
               <Button variant='text' sx={buttonSx}>
-                <Typography variant='subtitle2' pt={2} mr={0.5}>
-                  Sign Up
-                </Typography>
+                {isUpLg && (
+                  <Typography variant='subtitle2' pt={2} mr={0.5}>
+                    Sign Up
+                  </Typography>
+                )}
                 <HowToRegIcon fontSize='large' />
               </Button>
             </Box>
