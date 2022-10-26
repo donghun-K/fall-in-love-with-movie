@@ -33,8 +33,8 @@ const NavBar = () => {
       }}
     >
       <Grid container spacing={3}>
-        <Grid item xs={2} />
-        <Grid item xs={8}>
+        <Grid item xs={0} md={2} />
+        <Grid item xs={12} md={8}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -74,7 +74,7 @@ const NavBar = () => {
             </Box>
           </Toolbar>
         </Grid>
-        <Grid item xs={2} />
+        <Grid item xs={0} md={2} />
       </Grid>
     </AppBar>
   );
