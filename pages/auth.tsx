@@ -1,4 +1,13 @@
-import { Box, Button, Link, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  FormControl,
+  InputBase,
+  InputLabel,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { NextPage } from 'next/types';
@@ -22,13 +31,8 @@ const AuthPage: NextPage = () => {
     '& .MuiInput-root:before': {
       borderBottomColor: 'white',
     },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: 'primary.main',
-    },
-    '&:hover': {
-      '& .MuiInput-root:before': {
-        borderBottomColor: 'white',
-      },
+    '& .MuiInputBase-root:hover:not(.Mui-diabled):before': {
+      borderBottomColor: 'gray',
     },
     input: {
       color: 'white',
