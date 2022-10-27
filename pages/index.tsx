@@ -1,8 +1,8 @@
 import { NextPage } from 'next/types';
-import HomeMain from '../components/home/home-main';
+import HomeUnverified from '../components/home/home-unverified';
 
 const Home: NextPage = () => {
-  return <HomeMain />;
+  return <HomeUnverified />;
 };
 
 export default Home;

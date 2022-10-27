@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 
-const HomeMain = () => {
+const HomeUnverified = () => {
   const initialSx = { color: 'primary.main', display: 'inline' };
   return (
     <Box
@@ -95,4 +95,4 @@ const HomeMain = () => {
   );
 };
 
-export default HomeMain;
+export default HomeUnverified;
