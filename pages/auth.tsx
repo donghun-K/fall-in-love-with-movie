@@ -1,10 +1,11 @@
 import { Box, Button, Link, TextField, Typography } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { NextPage } from 'next/types';
-import { flexbox } from '@mui/system';
-import { withTheme } from '@emotion/react';
+import { useState } from 'react';
 
 const AuthPage: NextPage = () => {
+  const [isSignIn, setIsSignIn] = useState(true);
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (
     e: React.FormEvent<HTMLFormElement>
   ) => {
@@ -55,6 +56,7 @@ const AuthPage: NextPage = () => {
             justifyContent: 'space-evenly',
             alignItems: 'center',
             height: '500px',
+            ...(isSignIn ? {} : { height: '700px' }),
           }}
         >
           <Typography
@@ -65,8 +67,17 @@ const AuthPage: NextPage = () => {
               fontWeight: 'bold',
             }}
           >
-            Sign In
+            {isSignIn ? 'Sign In' : 'Sign Up'}
           </Typography>
+          {isSignIn ? null : (
+            <TextField
+              label='Username'
+              type='text'
+              variant='standard'
+              placeholder='Enter your username'
+              sx={inputSx}
+            />
+          )}
           <TextField
             label='Email'
             type='email'
@@ -81,12 +92,22 @@ const AuthPage: NextPage = () => {
             placeholder='Enter 8 character or more'
             sx={inputSx}
           />
+          {isSignIn ? null : (
+            <TextField
+              label='Confirm password'
+              type='password'
+              variant='standard'
+              placeholder='Confirm your password'
+              sx={inputSx}
+            />
+          )}
           <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
+              width: '300px',
             }}
           >
             <Button
@@ -98,7 +119,7 @@ const AuthPage: NextPage = () => {
                 '&:hover': {
                   backgroundColor: 'primary.light',
                 },
-                width: '120px',
+                width: '130px',
               }}
             >
               <Typography
@@ -108,13 +129,21 @@ const AuthPage: NextPage = () => {
                   fontWeight: 'bold',
                 }}
               >
-                Sign In
+                {isSignIn ? 'Sign In' : 'Sign Up'}
               </Typography>
-              <LoginIcon
-                sx={{
-                  color: 'white',
-                }}
-              />
+              {isSignIn ? (
+                <LoginIcon
+                  sx={{
+                    color: 'white',
+                  }}
+                />
+              ) : (
+                <HowToRegIcon
+                  sx={{
+                    color: 'white',
+                  }}
+                />
+              )}
             </Button>
             <Link
               href='#'
@@ -126,8 +155,9 @@ const AuthPage: NextPage = () => {
                   color: 'lightgray',
                 },
               }}
+              onClick={() => setIsSignIn(!isSignIn)}
             >
-              Create an Account
+              {isSignIn ? 'Create an Account' : 'Sign In with existing account'}
             </Link>
           </Box>
         </Box>
