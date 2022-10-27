@@ -58,7 +58,7 @@ const NavBar = () => {
               <Button variant='text' sx={buttonSx}>
                 {isUpLg && (
                   <Typography variant='subtitle2' pt={2} mr={0.5}>
-                    Log In
+                    Sign In
                   </Typography>
                 )}
                 <LoginIcon fontSize='large' />
