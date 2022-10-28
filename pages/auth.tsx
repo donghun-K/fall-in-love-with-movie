@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  InputBase,
-  InputLabel,
-  Link,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Link, TextField, Typography } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { NextPage } from 'next/types';
@@ -26,7 +17,7 @@ const AuthPage: NextPage = () => {
       color: 'white',
     },
     '& label.Mui-focused': {
-      color: 'theme.pallete.primary.main',
+      color: 'primary.main',
     },
     '& .MuiInput-root:before': {
       borderBottomColor: 'white',
@@ -161,7 +152,9 @@ const AuthPage: NextPage = () => {
               }}
               onClick={() => setIsSignIn(!isSignIn)}
             >
-              {isSignIn ? 'Create an Account' : 'Sign In with existing account'}
+              {isSignIn
+                ? "Don't have an account? Sign Up"
+                : 'Sign In with existing account'}
             </Link>
           </Box>
         </Box>

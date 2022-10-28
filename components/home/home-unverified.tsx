@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
+import Link from 'next/link';
 
 const HomeUnverified = () => {
   const initialSx = { color: 'primary.main', display: 'inline' };
@@ -37,7 +38,7 @@ const HomeUnverified = () => {
               color: 'white',
             }}
           >
-            영화 별점 평가 서비스
+            Movie Star Ratings
           </Typography>
           <Box
             sx={{
@@ -64,32 +65,33 @@ const HomeUnverified = () => {
             oney
           </Box>
         </Box>
-
-        <Button
-          variant='contained'
-          sx={{
-            p: 1.5,
-            backgroundColor: 'primary.dark',
-            '&:hover': {
-              backgroundColor: 'primary.light',
-            },
-          }}
-        >
-          <Typography
+        <Link href={'/auth'}>
+          <Button
+            variant='contained'
             sx={{
-              color: 'white',
-              mr: 1,
-              fontWeight: 'bold',
+              p: 1.5,
+              backgroundColor: 'primary.dark',
+              '&:hover': {
+                backgroundColor: 'primary.light',
+              },
             }}
           >
-            시작하기
-          </Typography>
-          <HowToRegIcon
-            sx={{
-              color: 'white',
-            }}
-          />
-        </Button>
+            <Typography
+              sx={{
+                color: 'white',
+                mr: 1,
+                fontWeight: 'bold',
+              }}
+            >
+              Get Started
+            </Typography>
+            <HowToRegIcon
+              sx={{
+                color: 'white',
+              }}
+            />
+          </Button>
+        </Link>
       </Box>
     </Box>
   );

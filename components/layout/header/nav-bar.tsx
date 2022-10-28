@@ -12,6 +12,7 @@ import Image from 'next/image';
 import { Box } from '@mui/system';
 import SearchBar from './search-bar';
 import theme from '../../../src/theme';
+import Link from 'next/link';
 
 const NavBar = () => {
   const isUpLg = useMediaQuery(theme.breakpoints.up('lg'));
@@ -41,13 +42,16 @@ const NavBar = () => {
               justifyContent: 'space-between',
             }}
           >
-            <Image
-              src={'/images/logo/logo1.png'}
-              width={160}
-              height={60}
-              alt='FILM'
-            />
-
+            <Link href={'/'}>
+              <Button>
+                <Image
+                  src={'/images/logo/logo1.png'}
+                  width={160}
+                  height={60}
+                  alt='FILM'
+                />
+              </Button>
+            </Link>
             <Box
               sx={{
                 display: 'flex',
@@ -55,22 +59,24 @@ const NavBar = () => {
               }}
             >
               <SearchBar />
-              <Button variant='text' sx={buttonSx}>
-                {isUpLg && (
-                  <Typography variant='subtitle2' pt={2} mr={0.5}>
-                    Sign In
-                  </Typography>
-                )}
-                <LoginIcon fontSize='large' />
-              </Button>
-              <Button variant='text' sx={buttonSx}>
+              <Link href={'/auth'}>
+                <Button variant='text' sx={buttonSx}>
+                  {isUpLg && (
+                    <Typography variant='subtitle2' pt={2} mr={0.5}>
+                      Sign In
+                    </Typography>
+                  )}
+                  <LoginIcon fontSize='large' />
+                </Button>
+              </Link>
+              {/* <Button variant='text' sx={buttonSx}>
                 {isUpLg && (
                   <Typography variant='subtitle2' pt={2} mr={0.5}>
                     Sign Up
                   </Typography>
                 )}
                 <HowToRegIcon fontSize='large' />
-              </Button>
+              </Button> */}
             </Box>
           </Toolbar>
         </Grid>
