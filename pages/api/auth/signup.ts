@@ -4,7 +4,7 @@ import { connectToDatabase } from '../../../lib/db';
 async function handler(req: any, res: any) {
   if (req.method === 'POST') {
     const data = req.body;
-    const { email, password } = data;
+    const { name, email, password } = data;
 
     if (
       !email ||
@@ -29,9 +29,20 @@ async function handler(req: any, res: any) {
       return;
     }
 
+    const existingName = await db.collection('users').findOne({ name: name });
+
+    if (existingName) {
+      res.status(422).json({
+        message: 'Username exists already!',
+      });
+      client.close();
+      return;
+    }
+
     const hashedPassword = await hashPassword(password);
 
     const result = await db.collection('users').insertOne({
+      name: name,
       email: email,
       password: hashedPassword,
     });

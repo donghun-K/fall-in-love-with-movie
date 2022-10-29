@@ -10,13 +10,14 @@ const AuthPage: NextPage = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
+  const [userPw, setUserPw] = useState('');
+  const [userConfirmPw, setUserConfirmPw] = useState('');
   const router = useRouter();
 
-  async function createUser(email: string, password: string) {
+  async function createUser(name: string, email: string, password: string) {
     const response = await fetch('/api/auth/signup', {
       method: 'POST',
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ name, email, password }),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -44,8 +45,12 @@ const AuthPage: NextPage = () => {
     //   });
     // }
     if (!isSignIn) {
+      if (userPw !== userConfirmPw) {
+        console.log('Confirm your password!');
+        return;
+      }
       try {
-        const result = createUser(userEmail, userPassword);
+        const result = createUser(userName, userEmail, userPw);
       } catch (error) {
         console.log(error);
       }
@@ -133,7 +138,7 @@ const AuthPage: NextPage = () => {
             placeholder='Enter 8 character or more'
             sx={inputSx}
             onChange={(e) => {
-              setUserPassword(e.target.value);
+              setUserPw(e.target.value);
             }}
           />
           {isSignIn ? null : (
