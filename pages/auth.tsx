@@ -3,13 +3,53 @@ import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { NextPage } from 'next/types';
 import { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const AuthPage: NextPage = () => {
   const [isSignIn, setIsSignIn] = useState(true);
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const router = useRouter();
+
+  async function createUser(email: string, password: string) {
+    const response = await fetch('/api/auth/signup', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Something went wrong!');
+    }
+
+    return data;
+  }
+
+  const submitHandler: React.FormEventHandler<HTMLFormElement> = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
+
+    // if (isSignIn) {
+    //   const result = await signIn('credentials', {
+    //     redirect: false,
+    //     email: 'dora',
+    //     password: 'dora',
+    //   });
+    // }
+    if (!isSignIn) {
+      try {
+        const result = createUser(userEmail, userPassword);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   const inputSx = {
@@ -43,7 +83,7 @@ const AuthPage: NextPage = () => {
         height: '100%',
       }}
     >
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={submitHandler}>
         <Box
           sx={{
             display: 'flex',
@@ -71,6 +111,9 @@ const AuthPage: NextPage = () => {
               variant='standard'
               placeholder='Enter your username'
               sx={inputSx}
+              onChange={(e) => {
+                setUserName(e.target.value);
+              }}
             />
           )}
           <TextField
@@ -79,6 +122,9 @@ const AuthPage: NextPage = () => {
             variant='standard'
             placeholder='example@example.com'
             sx={inputSx}
+            onChange={(e) => {
+              setUserEmail(e.target.value);
+            }}
           />
           <TextField
             label='Password'
@@ -86,6 +132,9 @@ const AuthPage: NextPage = () => {
             variant='standard'
             placeholder='Enter 8 character or more'
             sx={inputSx}
+            onChange={(e) => {
+              setUserPassword(e.target.value);
+            }}
           />
           {isSignIn ? null : (
             <TextField
