@@ -1,8 +1,12 @@
 import { NextPage } from 'next/types';
-import HomeUnverified from '../components/home/home-unverified';
+import HomeUnauth from '../components/home/home-unauth';
+
+import { useSession } from 'next-auth/react';
+import HomeAuth from '../components/home/home-auth';
 
 const Home: NextPage = () => {
-  return <HomeUnverified />;
+  const { data: session, status } = useSession();
+  return <>{status === 'authenticated' ? <HomeAuth /> : <HomeUnauth />}</>;
 };
 
 export default Home;

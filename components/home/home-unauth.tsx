@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import Link from 'next/link';
 
-const HomeUnverified = () => {
+const HomeUnauth = () => {
   const initialSx = { color: 'primary.main', display: 'inline' };
   return (
     <Box
@@ -65,7 +65,7 @@ const HomeUnverified = () => {
             oney
           </Box>
         </Box>
-        <Link href={'/auth'}>
+        <Link href={'/api/auth/signin'}>
           <Button
             variant='contained'
             sx={{
@@ -97,4 +97,4 @@ const HomeUnverified = () => {
   );
 };
 
-export default HomeUnverified;
+export default HomeUnauth;
