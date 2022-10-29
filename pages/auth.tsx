@@ -1,4 +1,12 @@
-import { Box, Button, Link, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Link,
+  TextField,
+  Typography,
+  Snackbar,
+} from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { NextPage } from 'next/types';
@@ -12,6 +20,8 @@ const AuthPage: NextPage = () => {
   const [userEmail, setUserEmail] = useState('');
   const [userPw, setUserPw] = useState('');
   const [userConfirmPw, setUserConfirmPw] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMsg, setSnackbarMsg] = useState('');
   const router = useRouter();
 
   async function createUser(name: string, email: string, password: string) {
@@ -32,7 +42,7 @@ const AuthPage: NextPage = () => {
     return data;
   }
 
-  const submitHandler: React.FormEventHandler<HTMLFormElement> = async (
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
@@ -44,16 +54,39 @@ const AuthPage: NextPage = () => {
         password: userPw,
       });
       if (result === undefined) {
-        console.log('Sign In failed');
         return;
       }
       if (!result.error) {
         router.replace('/');
+      } else {
+        setSnackbarMsg(result.error);
+        setSnackbarOpen(true);
       }
     }
     if (!isSignIn) {
+      if (userName === '' || userName.length < 5) {
+        setSnackbarMsg('Check your Username!');
+        setSnackbarOpen(true);
+        return;
+      }
+      if (userEmail === '') {
+        setSnackbarMsg('Enter your Email');
+        setSnackbarOpen(true);
+        return;
+      }
+      if (userPw.length < 8) {
+        setSnackbarMsg('Check your Password!');
+        setSnackbarOpen(true);
+        return;
+      }
+      if (userConfirmPw.length < 8) {
+        setSnackbarMsg('Check your Confirm password!');
+        setSnackbarOpen(true);
+        return;
+      }
       if (userPw !== userConfirmPw) {
-        console.log('Confirm your password!');
+        setSnackbarMsg('Password and Confirm password does not match!');
+        setSnackbarOpen(true);
         return;
       }
       try {
@@ -62,6 +95,10 @@ const AuthPage: NextPage = () => {
         console.log(error);
       }
     }
+  };
+
+  const handleClose = () => {
+    setSnackbarOpen(false);
   };
 
   const inputSx = {
@@ -95,7 +132,7 @@ const AuthPage: NextPage = () => {
         height: '100%',
       }}
     >
-      <form onSubmit={submitHandler}>
+      <form onSubmit={handleSubmit}>
         <Box
           sx={{
             display: 'flex',
@@ -155,6 +192,9 @@ const AuthPage: NextPage = () => {
               variant='standard'
               placeholder='Confirm your password'
               sx={inputSx}
+              onChange={(e) => {
+                setUserConfirmPw(e.target.value);
+              }}
             />
           )}
           <Box
@@ -220,6 +260,16 @@ const AuthPage: NextPage = () => {
           </Box>
         </Box>
       </form>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <MuiAlert sx={{ width: '30rem' }} variant='filled' severity='error'>
+          {snackbarMsg}
+        </MuiAlert>
+      </Snackbar>
     </Box>
   );
 };

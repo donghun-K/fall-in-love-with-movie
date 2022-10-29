@@ -65,7 +65,7 @@ const HomeUnauth = () => {
             oney
           </Box>
         </Box>
-        <Link href={'/api/auth/signin'}>
+        <Link href={'/auth'}>
           <Button
             variant='contained'
             sx={{
