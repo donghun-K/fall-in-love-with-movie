@@ -1,26 +1,51 @@
+import { Awaitable, User } from 'next-auth/core/types';
 import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { verifyPassword } from '../../../lib/auth';
+import { connectToDatabase } from '../../../lib/db';
 
 export default NextAuth({
+  session: {
+    strategy: 'jwt',
+  },
   providers: [
     CredentialsProvider({
       credentials: {
-        username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
+        email: { label: 'Username', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
-        const user = { id: '1', name: 'J Smith', email: 'jsmith@example.com' };
-
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user;
-        } else {
-          // If you return null then an error will be displayed advising the user to check their details.
+        if (credentials === undefined) {
           return null;
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
+        const client = await connectToDatabase();
+
+        const userCollection = client.db('film').collection('users');
+
+        const dbUser = await userCollection.findOne({
+          email: credentials.email,
+        });
+
+        if (!dbUser) {
+          throw new Error('No user found!');
+        }
+
+        const isValid = await verifyPassword(
+          credentials.password,
+          dbUser.password
+        );
+
+        if (!isValid) {
+          throw new Error('Could not log you in!');
+        }
+        client.close();
+
+        const user: Awaitable<User | null> = {
+          id: String(dbUser._id),
+          name: dbUser.name,
+          email: dbUser.email,
+        };
+        return user;
       },
     }),
   ],

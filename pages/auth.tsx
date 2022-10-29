@@ -37,13 +37,20 @@ const AuthPage: NextPage = () => {
   ) => {
     e.preventDefault();
 
-    // if (isSignIn) {
-    //   const result = await signIn('credentials', {
-    //     redirect: false,
-    //     email: 'dora',
-    //     password: 'dora',
-    //   });
-    // }
+    if (isSignIn) {
+      const result = await signIn('credentials', {
+        redirect: false,
+        email: userEmail,
+        password: userPw,
+      });
+      if (result === undefined) {
+        console.log('Sign In failed');
+        return;
+      }
+      if (!result.error) {
+        router.replace('/');
+      }
+    }
     if (!isSignIn) {
       if (userPw !== userConfirmPw) {
         console.log('Confirm your password!');
