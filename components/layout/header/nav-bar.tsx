@@ -67,7 +67,7 @@ const NavBar = () => {
                   variant='text'
                   sx={buttonSx}
                   onClick={() => {
-                    signOut();
+                    signOut({ redirect: false });
                   }}
                 >
                   <LogoutIcon fontSize='large' />
