@@ -6,7 +6,7 @@ import {
   Typography,
   Snackbar,
 } from '@mui/material';
-import MuiAlert from '@mui/material/Alert';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { NextPage } from 'next/types';
@@ -36,10 +36,12 @@ const AuthPage: NextPage = () => {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.message || 'Something went wrong!');
+      setSnackbarMsg(data.message || 'Sign Up failed');
+      setSnackbarOpen(true);
+      return undefined;
+    } else {
+      return data;
     }
-
-    return data;
   }
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
@@ -48,6 +50,16 @@ const AuthPage: NextPage = () => {
     e.preventDefault();
 
     if (isSignIn) {
+      if (userEmail === '') {
+        setSnackbarMsg('Enter your Email');
+        setSnackbarOpen(true);
+        return;
+      }
+      if (userPw.length < 8) {
+        setSnackbarMsg('Check your Password!');
+        setSnackbarOpen(true);
+        return;
+      }
       const result = await signIn('credentials', {
         redirect: false,
         email: userEmail,
@@ -89,10 +101,11 @@ const AuthPage: NextPage = () => {
         setSnackbarOpen(true);
         return;
       }
-      try {
-        const result = createUser(userName, userEmail, userPw);
-      } catch (error) {
-        console.log(error);
+
+      const result = await createUser(userName, userEmail, userPw);
+
+      if (result) {
+        router.replace('/');
       }
     }
   };

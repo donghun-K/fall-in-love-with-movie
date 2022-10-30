@@ -23,7 +23,7 @@ async function handler(req: any, res: any) {
 
     if (existingUser) {
       res.status(422).json({
-        message: 'User exists already!',
+        message: 'Email exists already!',
       });
       client.close();
       return;

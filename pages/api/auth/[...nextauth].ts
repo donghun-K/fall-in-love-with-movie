@@ -36,7 +36,7 @@ export default NextAuth({
         );
 
         if (!isValid) {
-          throw new Error('Could not Sign In!');
+          throw new Error('Wrong Password!');
         }
         client.close();
 
