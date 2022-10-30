@@ -5,8 +5,11 @@ import {
   TextField,
   Typography,
   Snackbar,
+  Dialog,
+  DialogActions,
+  DialogTitle,
 } from '@mui/material';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import MuiAlert from '@mui/material/Alert';
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { NextPage } from 'next/types';
@@ -22,6 +25,7 @@ const AuthPage: NextPage = () => {
   const [userConfirmPw, setUserConfirmPw] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMsg, setSnackbarMsg] = useState('');
+  const [dialogOpen, setDialogOpen] = useState(false);
   const router = useRouter();
 
   async function createUser(name: string, email: string, password: string) {
@@ -69,7 +73,7 @@ const AuthPage: NextPage = () => {
         return;
       }
       if (!result.error) {
-        router.replace('/');
+        setDialogOpen(true);
       } else {
         setSnackbarMsg(result.error);
         setSnackbarOpen(true);
@@ -105,13 +109,17 @@ const AuthPage: NextPage = () => {
       const result = await createUser(userName, userEmail, userPw);
 
       if (result) {
-        router.replace('/');
+        setDialogOpen(true);
       }
     }
   };
 
-  const handleClose = () => {
+  const handleSnackbarClose = () => {
     setSnackbarOpen(false);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
   };
 
   const inputSx = {
@@ -276,13 +284,47 @@ const AuthPage: NextPage = () => {
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={3000}
-        onClose={handleClose}
+        onClose={handleSnackbarClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
         <MuiAlert sx={{ width: '30rem' }} variant='filled' severity='error'>
           {snackbarMsg}
         </MuiAlert>
       </Snackbar>
+      <Dialog
+        sx={{
+          '& .MuiDialog-paper': {
+            backgroundColor: '#111111',
+          },
+        }}
+        open={dialogOpen}
+        onClose={handleDialogClose}
+      >
+        <DialogTitle sx={{ backgroundColor: '#111111', color: 'white' }}>
+          {'Success!'}
+        </DialogTitle>
+        <DialogActions
+          sx={{
+            backgroundColor: '#111111',
+            color: 'white',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <Button
+            onClick={() => {
+              handleDialogClose();
+              if (isSignIn) {
+                router.replace('/');
+              } else {
+                setIsSignIn(true);
+              }
+            }}
+          >
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
