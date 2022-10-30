@@ -7,14 +7,17 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
-import HowToRegIcon from '@mui/icons-material/HowToReg';
+import LogoutIcon from '@mui/icons-material/Logout';
 import Image from 'next/image';
 import { Box } from '@mui/system';
 import SearchBar from './search-bar';
 import theme from '../../../src/theme';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 
 const NavBar = () => {
+  const { data: session, status } = useSession();
   const isUpLg = useMediaQuery(theme.breakpoints.up('lg'));
 
   const buttonSx = {
@@ -59,24 +62,33 @@ const NavBar = () => {
               }}
             >
               <SearchBar />
-              <Link href={'/auth'}>
-                <Button variant='text' sx={buttonSx}>
+              {status === 'authenticated' ? (
+                <Button
+                  variant='text'
+                  sx={buttonSx}
+                  onClick={() => {
+                    signOut();
+                  }}
+                >
+                  <LogoutIcon fontSize='large' />
                   {isUpLg && (
-                    <Typography variant='subtitle2' pt={2} mr={0.5}>
-                      Sign In
+                    <Typography variant='subtitle2' pt={2} ml={0.5}>
+                      Sign Out
                     </Typography>
                   )}
-                  <LoginIcon fontSize='large' />
                 </Button>
-              </Link>
-              {/* <Button variant='text' sx={buttonSx}>
-                {isUpLg && (
-                  <Typography variant='subtitle2' pt={2} mr={0.5}>
-                    Sign Up
-                  </Typography>
-                )}
-                <HowToRegIcon fontSize='large' />
-              </Button> */}
+              ) : (
+                <Link href={'/auth'}>
+                  <Button variant='text' sx={buttonSx}>
+                    {isUpLg && (
+                      <Typography variant='subtitle2' pt={2} mr={0.5}>
+                        Sign In
+                      </Typography>
+                    )}
+                    <LoginIcon fontSize='large' />
+                  </Button>
+                </Link>
+              )}
             </Box>
           </Toolbar>
         </Grid>
