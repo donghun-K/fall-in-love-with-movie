@@ -62,7 +62,7 @@ const HomeUnauth = () => {
             <Typography variant='h2' sx={initialSx}>
               M
             </Typography>
-            oney
+            ovie
           </Box>
         </Box>
         <Link href={'/auth'}>
