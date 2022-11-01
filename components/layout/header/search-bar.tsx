@@ -28,6 +28,12 @@ const SearchBar = () => {
     ...focusedPaperSx,
   };
 
+  const testSearch = async () => {
+    const response = await fetch('/api/search/test');
+    const data = await response.json();
+    console.log(data);
+  };
+
   return (
     <Paper component='form' sx={paperSx}>
       <InputBase
@@ -47,6 +53,9 @@ const SearchBar = () => {
           '&:hover': {
             color: 'primary.light',
           },
+        }}
+        onClick={() => {
+          testSearch();
         }}
       >
         <SearchRoundedIcon />
