@@ -33,7 +33,10 @@ const SearchBar = () => {
     ...focusedPaperSx,
   };
 
-  const search = async () => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
     if (searchInput === '') {
       return;
     }
@@ -41,35 +44,34 @@ const SearchBar = () => {
   };
 
   return (
-    <Paper component='form' sx={paperSx}>
-      <InputBase
-        sx={{
-          ml: 1,
-          color: 'primary.light',
-        }}
-        onFocus={() => setTextFieldFocused(true)}
-        onBlur={() => setTextFieldFocused(false)}
-        onChange={(e) => {
-          setSearchInput(e.target.value);
-        }}
-        placeholder='Search'
-      />
-      <IconButton
-        type='button'
-        sx={{
-          color: 'primary.dark',
-          p: '10px',
-          '&:hover': {
+    <form onSubmit={handleSubmit}>
+      <Paper sx={paperSx}>
+        <InputBase
+          sx={{
+            ml: 1,
             color: 'primary.light',
-          },
-        }}
-        onClick={async () => {
-          search();
-        }}
-      >
-        <SearchRoundedIcon />
-      </IconButton>
-    </Paper>
+          }}
+          onFocus={() => setTextFieldFocused(true)}
+          onBlur={() => setTextFieldFocused(false)}
+          onChange={(e) => {
+            setSearchInput(e.target.value);
+          }}
+          placeholder='Search'
+        />
+        <IconButton
+          type='submit'
+          sx={{
+            color: 'primary.dark',
+            p: '10px',
+            '&:hover': {
+              color: 'primary.light',
+            },
+          }}
+        >
+          <SearchRoundedIcon />
+        </IconButton>
+      </Paper>
+    </form>
   );
 };
 
