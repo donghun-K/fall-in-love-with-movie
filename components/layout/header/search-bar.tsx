@@ -1,9 +1,14 @@
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { IconButton, InputBase, Paper } from '@mui/material';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
 const SearchBar = () => {
   const [textFieldFocused, setTextFieldFocused] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
+
+  const router = useRouter();
 
   const focusedPaperSx = textFieldFocused
     ? {
@@ -28,10 +33,11 @@ const SearchBar = () => {
     ...focusedPaperSx,
   };
 
-  const testSearch = async () => {
-    const response = await fetch('/api/search/test');
-    const data = await response.json();
-    console.log(data);
+  const search = async () => {
+    if (searchInput === '') {
+      return;
+    }
+    router.replace(`/search/${searchInput}`);
   };
 
   return (
@@ -43,6 +49,9 @@ const SearchBar = () => {
         }}
         onFocus={() => setTextFieldFocused(true)}
         onBlur={() => setTextFieldFocused(false)}
+        onChange={(e) => {
+          setSearchInput(e.target.value);
+        }}
         placeholder='Search'
       />
       <IconButton
@@ -54,8 +63,8 @@ const SearchBar = () => {
             color: 'primary.light',
           },
         }}
-        onClick={() => {
-          testSearch();
+        onClick={async () => {
+          search();
         }}
       >
         <SearchRoundedIcon />
