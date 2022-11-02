@@ -39,15 +39,14 @@ const SearchPage = (props: { data: string }) => {
   }, [props]);
 
   return (
-    <div>
-      <Typography variant='h3' mt={1} color='primary'>
+    <Box
+      sx={{
+        pt: '20px',
+      }}
+    >
+      <Typography variant='h4' ml={5} mt={1} mb={1} color='primary'>
         &apos;{props.data}&apos; 검색 결과
       </Typography>
-      {/* {movieData?.items.map((item) => (
-        <Typography color='primary' key={item.title}>
-          {item.title}
-        </Typography>
-      ))} */}
       <Box
         sx={{
           display: 'flex',
@@ -64,7 +63,7 @@ const SearchPage = (props: { data: string }) => {
           />
         ))}
       </Box>
-    </div>
+    </Box>
   );
 };
 
