@@ -298,7 +298,6 @@ const AuthPage: NextPage = () => {
           },
         }}
         open={dialogOpen}
-        onClose={handleDialogClose}
       >
         <DialogTitle sx={{ backgroundColor: '#111111', color: 'white' }}>
           {'Success!'}
