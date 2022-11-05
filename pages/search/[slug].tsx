@@ -69,7 +69,6 @@ const SearchPage = (props: { data: string }) => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context.params?.slug;
-  console.log('slug: ' + slug);
   return {
     props: {
       data: slug,

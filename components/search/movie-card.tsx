@@ -11,6 +11,7 @@ const MovieCard = ({
   pubDate: string;
   image: string;
 }) => {
+  const cTitle = title.replace('<b>', '').replace('</b>', '');
   return (
     <Box
       sx={{
@@ -62,8 +63,8 @@ const MovieCard = ({
           color: 'white',
         }}
       >
-        <Link href={`/detail/test`}>
-          <Tooltip title={title.replace('<b>', '').replace('</b>', '')}>
+        <Link href={`/detail/${cTitle}_${pubDate}`}>
+          <Tooltip title={cTitle}>
             <Typography
               sx={{
                 fontSize: '.9rem',
@@ -72,11 +73,10 @@ const MovieCard = ({
                   textDecoration: 'underline',
                 },
               }}
-              dangerouslySetInnerHTML={{
-                __html: title,
-              }}
               noWrap={true}
-            />
+            >
+              {cTitle}
+            </Typography>
           </Tooltip>
         </Link>
         <Typography
