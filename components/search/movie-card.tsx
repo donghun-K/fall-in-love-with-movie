@@ -6,12 +6,16 @@ const MovieCard = ({
   title,
   pubDate,
   image,
+  link,
 }: {
   title: string;
   pubDate: string;
   image: string;
+  link: string;
 }) => {
   const cTitle = title.replace('<b>', '').replace('</b>', '');
+  const re = /[0-9]{6}/;
+  const movieId = link.match(re);
   return (
     <Box
       sx={{
@@ -63,7 +67,7 @@ const MovieCard = ({
           color: 'white',
         }}
       >
-        <Link href={`/detail/${cTitle}_${pubDate}`}>
+        <Link href={`/detail/${movieId}`}>
           <Tooltip title={cTitle}>
             <Typography
               sx={{

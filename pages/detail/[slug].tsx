@@ -2,14 +2,11 @@ import { GetStaticProps, GetStaticPaths } from 'next/types';
 import Typography from '@mui/material/Typography';
 
 const DetailPage = (props: { data: string }) => {
-  const [title, pubDate] = props.data.split('_');
+  const movieId = props.data;
   return (
     <div>
       <Typography variant='h3' color='primary'>
-        {title}
-      </Typography>
-      <Typography variant='h5' color='secondary'>
-        {pubDate}
+        {movieId}
       </Typography>
     </div>
   );

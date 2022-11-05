@@ -59,7 +59,8 @@ const SearchPage = (props: { data: string }) => {
             title={item.title}
             pubDate={item.pubDate}
             image={item.image}
-            key={item.title}
+            link={item.link}
+            key={item.title + item.pubDate}
           />
         ))}
       </Box>
