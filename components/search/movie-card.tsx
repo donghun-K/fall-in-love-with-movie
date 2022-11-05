@@ -1,5 +1,6 @@
 import { Box, Typography, Tooltip } from '@mui/material';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const MovieCard = ({
   title,
@@ -13,6 +14,7 @@ const MovieCard = ({
   return (
     <Box
       sx={{
+        userSelect: 'none',
         position: 'relative',
         width: '200px',
         hegiht: '300px',
@@ -60,18 +62,23 @@ const MovieCard = ({
           color: 'white',
         }}
       >
-        <Tooltip title={title.replace('<b>', '').replace('</b>', '')}>
-          <Typography
-            sx={{
-              fontSize: '.9rem',
-            }}
-            dangerouslySetInnerHTML={{
-              __html: title,
-            }}
-            noWrap={true}
-          />
-        </Tooltip>
-
+        <Link href={`/detail/test`}>
+          <Tooltip title={title.replace('<b>', '').replace('</b>', '')}>
+            <Typography
+              sx={{
+                fontSize: '.9rem',
+                '&:hover': {
+                  cursor: 'pointer',
+                  textDecoration: 'underline',
+                },
+              }}
+              dangerouslySetInnerHTML={{
+                __html: title,
+              }}
+              noWrap={true}
+            />
+          </Tooltip>
+        </Link>
         <Typography
           sx={{
             fontSize: '.7rem',
