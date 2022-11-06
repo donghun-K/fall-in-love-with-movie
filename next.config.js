@@ -10,6 +10,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'movie-phinf.pstatic.net',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };
