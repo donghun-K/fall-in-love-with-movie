@@ -106,13 +106,14 @@ const DetailPage = (props: { data: string }) => {
                 >
                   <Box>
                     <Typography variant='subtitle1' color='primary'>
-                      {movieDetail.release_date}
+                      {movieDetail.release_date.match(/[0-9]{4}/)}
                     </Typography>
                     <Typography variant='h3' mt={1} mb={1} color='primary'>
                       {movieDetail.title}
                     </Typography>
                     <Typography variant='subtitle1' color='primary'>
-                      {movieDetail.runtime}
+                      {movieDetail.runtime} min |{' '}
+                      {movieDetail.genres.map((item) => item.name).join(', ')}
                     </Typography>
                   </Box>
                   <Typography variant='body1' color='primary'>

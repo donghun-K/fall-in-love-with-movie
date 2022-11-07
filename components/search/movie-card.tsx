@@ -81,7 +81,7 @@ const MovieCard = ({
             color: 'gray',
           }}
         >
-          {release}
+          {release.match(/[0-9]{4}/)}
         </Typography>
       </Box>
     </Box>
