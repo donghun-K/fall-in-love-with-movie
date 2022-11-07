@@ -3,12 +3,8 @@ import axios from 'axios';
 async function handler(req: any, res: any) {
   const { query } = req.body;
   const response = await axios({
-    url: `https://openapi.naver.com/v1/search/movie.json?query=${query}`,
+    url: `https://api.themoviedb.org/3/search/movie?api_key=${process.env.API_KEY}&language=ko-KR&page=1&include_adult=true&query=${query}`,
     method: 'get',
-    headers: {
-      'X-Naver-Client-Id': process.env.NAVER_ID,
-      'X-Naver-Client-Secret': process.env.NAVER_SECRET,
-    },
   });
   res.status(201).json({ data: response.data });
 }

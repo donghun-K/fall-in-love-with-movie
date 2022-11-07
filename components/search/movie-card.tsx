@@ -4,18 +4,14 @@ import Link from 'next/link';
 
 const MovieCard = ({
   title,
-  pubDate,
-  image,
-  link,
+  release,
+  poster,
 }: {
   title: string;
-  pubDate: string;
-  image: string;
-  link: string;
+  release: string;
+  poster: string;
 }) => {
-  const cTitle = title.replace('<b>', '').replace('</b>', '');
-  const re = /[0-9]{6}/;
-  const movieId = link.match(re);
+  console.log(poster);
   return (
     <Box
       sx={{
@@ -47,12 +43,7 @@ const MovieCard = ({
         },
       }}
     >
-      <Image
-        src={image.replace('mit110', 'mit250')}
-        alt={title}
-        width={200}
-        height={287}
-      />
+      <Image src={poster} alt={title} width={200} height={287} />
 
       <Box
         sx={{
@@ -67,8 +58,8 @@ const MovieCard = ({
           color: 'white',
         }}
       >
-        <Link href={`/detail/${movieId}`}>
-          <Tooltip title={cTitle}>
+        <Link href={`/detail/test`}>
+          <Tooltip title={title}>
             <Typography
               sx={{
                 fontSize: '.9rem',
@@ -79,7 +70,7 @@ const MovieCard = ({
               }}
               noWrap={true}
             >
-              {cTitle}
+              {title}
             </Typography>
           </Tooltip>
         </Link>
@@ -89,7 +80,7 @@ const MovieCard = ({
             color: 'gray',
           }}
         >
-          {pubDate}
+          {release}
         </Typography>
       </Box>
     </Box>

@@ -6,13 +6,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'ssl.pstatic.net',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'movie-phinf.pstatic.net',
+        hostname: 'image.tmdb.org',
         port: '',
         pathname: '/**',
       },

@@ -6,35 +6,36 @@ import { Box } from '@mui/material';
 import MovieCard from '../../components/search/movie-card';
 
 interface Data {
-  lastBuildDate: string;
-  total: number;
-  start: number;
-  display: number;
-  items: {
-    title: string;
-    link: string;
-    image: string;
-    subtitle: string;
-    pubDate: string;
-    director: string;
-    actor: string;
-    userRating: string;
-  }[];
+  poster_path: string;
+  adult: boolean;
+  overview: string;
+  release_date: string;
+  genre_ids: number[];
+  id: number;
+  original_title: string;
+  original_language: string;
+  title: string;
+  backdrop_path: string;
+  popularity: number;
+  vote_count: number;
+  video: boolean;
+  vote_average: number;
 }
-const getMovieData = async (query: string): Promise<Data> => {
+
+const getMovieData = async (query: string) => {
   const response = await axios.post('/api/search', {
     query: query,
   });
-  const data: Data = response.data.data;
+  const data = response.data.data;
   return data;
 };
 
 const SearchPage = (props: { data: string }) => {
-  const [movieData, setMovieData] = useState<Data>();
+  const [movieData, setMovieData] = useState<Data[]>();
 
   useEffect(() => {
     getMovieData(props.data).then((res) => {
-      setMovieData(res);
+      setMovieData(res.results);
     });
   }, [props]);
 
@@ -54,13 +55,12 @@ const SearchPage = (props: { data: string }) => {
           flexWrap: 'wrap',
         }}
       >
-        {movieData?.items.map((item) => (
+        {movieData?.map((item) => (
           <MovieCard
             title={item.title}
-            pubDate={item.pubDate}
-            image={item.image}
-            link={item.link}
-            key={item.title + item.pubDate}
+            release={item.release_date}
+            poster={`https://image.tmdb.org/t/p/original/${item.poster_path}`}
+            key={item.id}
           />
         ))}
       </Box>
