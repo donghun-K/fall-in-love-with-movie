@@ -16,7 +16,6 @@ const MovieCard = ({
   const cTitle = title.replace('<b>', '').replace('</b>', '');
   const re = /[0-9]{6}/;
   const movieId = link.match(re);
-  console.log(image);
   return (
     <Box
       sx={{

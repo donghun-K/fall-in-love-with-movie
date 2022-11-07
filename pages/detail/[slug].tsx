@@ -3,6 +3,8 @@ import Typography from '@mui/material/Typography';
 import { Box, Grid, Rating, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import theme from '../../src/theme';
+import { useEffect, useState } from 'react';
+import { getImageSrc } from '../../lib/detail';
 
 const DUMMY_DATA = {
   title: 'Dummy Title',
@@ -16,9 +18,18 @@ const DUMMY_DATA = {
 };
 
 const DetailPage = (props: { data: string }) => {
-  const movieId = props.data;
   const isDownMd = useMediaQuery(theme.breakpoints.down('md'));
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const [imageSrc, setImageSrc] = useState<string>('');
+
+  useEffect(() => {
+    if (props.data !== undefined) {
+      getImageSrc(props.data).then((res) => {
+        setImageSrc(res);
+      });
+    }
+  }, [props.data]);
   return (
     <Box
       sx={{
@@ -48,12 +59,14 @@ const DetailPage = (props: { data: string }) => {
             justifyContent: isDownMd ? 'center' : 'flex-start',
           }}
         >
-          <Image
-            src={DUMMY_DATA.image}
-            width={isDownMd ? (isDownSm ? 324 : 216) : 288}
-            height={isDownMd ? (isDownSm ? 450 : 300) : 400}
-            alt={DUMMY_DATA.title}
-          />
+          {imageSrc !== '' && (
+            <Image
+              src={imageSrc}
+              width={isDownMd ? (isDownSm ? 324 : 216) : 288}
+              height={isDownMd ? (isDownSm ? 450 : 300) : 400}
+              alt={DUMMY_DATA.title}
+            />
+          )}
         </Grid>
         <Grid item xs={10} sm={5} md={6} lg={7} pl={isDownMd ? 1 : 0}>
           <Box
