@@ -18,11 +18,11 @@ const Layout: FC<layoutProps> = ({ children }) => {
           minHeight: 'calc(100vh - 56px)',
         }}
       >
-        <Grid item xs={0} md={2} />
-        <Grid item xs={12} md={8}>
+        <Grid item xs={0} md={1} lg={2} />
+        <Grid item xs={12} md={10} lg={8}>
           {children}
         </Grid>
-        <Grid item xs={0} md={2} />
+        <Grid item xs={0} md={1} lg={2} />
       </Grid>
     </Fragment>
   );

@@ -1,9 +1,10 @@
 import { GetStaticProps, GetStaticPaths } from 'next/types';
 import Typography from '@mui/material/Typography';
-import { Box, Grid, Rating } from '@mui/material';
+import { Box, Button, Grid, Rating, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import theme from '../../src/theme';
 
 interface Detail {
   adult: boolean;
@@ -64,12 +65,17 @@ const getMovieDetail = async (movieId: string) => {
 };
 
 const DetailPage = (props: { data: string }) => {
+  const isDownMd = useMediaQuery(theme.breakpoints.down('md'));
+  const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
+
   const [movieDetail, setMovieDetail] = useState<Detail>();
+
   useEffect(() => {
     getMovieDetail(props.data).then((res) => {
       setMovieDetail(res);
     });
   }, [props]);
+
   return (
     <Box
       sx={{
@@ -78,66 +84,142 @@ const DetailPage = (props: { data: string }) => {
       }}
     >
       {movieDetail !== undefined ? (
-        <>
-          <Box
+        <Grid
+          container
+          spacing={0}
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            mt: isDownMd ? '1rem' : '5rem',
+          }}
+        >
+          <Grid
+            item
+            xs={10}
+            sm={8}
+            md={6}
+            lg={5}
             sx={{
               display: 'flex',
-              flexDirection: 'row',
-              mt: '5rem',
+              justifyContent: isDownMd ? 'center' : 'flex-start',
+              mb: '1rem',
             }}
           >
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6} lg={5}>
-                <Image
-                  src={`https://image.tmdb.org/t/p/original/${movieDetail.poster_path}`}
-                  width={288}
-                  height={400}
-                  alt={movieDetail.title}
-                />
-              </Grid>
-              <Grid item xs={12} md={6} lg={7}>
-                <Box
+            <Image
+              src={`https://image.tmdb.org/t/p/original/${movieDetail.poster_path}`}
+              width={isDownMd ? 324 : 288}
+              height={isDownMd ? 450 : 400}
+              alt={movieDetail.title}
+            />
+          </Grid>
+          <Grid item xs={10} sm={8} md={6} lg={7}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: isDownSm ? 'center' : 'space-between',
+                height: isDownMd ? '300px' : '400px',
+              }}
+            >
+              <Box>
+                <Typography
+                  variant='subtitle1'
+                  color='primary'
                   sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    height: '400px',
+                    fontSize: isDownMd ? '.7rem' : '.8rem',
+                    color: 'gray',
+                    fontWeight: 'bolder',
                   }}
                 >
-                  <Box>
-                    <Typography variant='subtitle1' color='primary'>
-                      {movieDetail.release_date.match(/[0-9]{4}/)}
-                    </Typography>
-                    <Typography variant='h3' mt={1} mb={1} color='primary'>
-                      {movieDetail.title}
-                    </Typography>
-                    <Typography variant='subtitle1' color='primary'>
-                      {movieDetail.runtime} min |{' '}
-                      {movieDetail.genres.map((item) => item.name).join(', ')}
-                    </Typography>
-                  </Box>
-                  <Typography variant='body1' color='primary'>
-                    {movieDetail.overview}
-                  </Typography>
-                  <Box>
-                    <Rating
-                      sx={{
-                        fontSize: '4rem',
-                        '& .MuiRating-icon': {
-                          color: (theme) => theme.palette.primary.main,
-                        },
-                      }}
-                      precision={0.5}
-                    />
-                  </Box>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-          <Box>
-            <Typography>Comments</Typography>
-          </Box>
-        </>
+                  {movieDetail.release_date.match(/[0-9]{4}/)}
+                </Typography>
+                <Typography
+                  variant='h3'
+                  mb={1}
+                  color='primary'
+                  sx={{
+                    fontSize: isDownMd
+                      ? isDownSm
+                        ? '1.3rem'
+                        : '1.8rem'
+                      : '2rem',
+                    color: 'white',
+                    fontWeight: 'bolder',
+                  }}
+                >
+                  {movieDetail.title}
+                </Typography>
+                <Typography
+                  variant='subtitle1'
+                  color='primary'
+                  sx={{
+                    fontSize: isDownMd ? '.7rem' : '.8rem',
+                    color: 'gray',
+                    fontWeight: 'bolder',
+                  }}
+                >
+                  {movieDetail.runtime} min |{' '}
+                  {movieDetail.genres.map((item) => item.name).join(', ')}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  height: isDownSm ? '120px' : '200px',
+                  overflow: 'scroll',
+                  margin: isDownSm ? '1rem 0' : 0,
+                }}
+              >
+                <Typography
+                  variant='body1'
+                  mt={isDownSm ? 1 : 0}
+                  mb={isDownSm ? 1 : 0}
+                  sx={{
+                    fontSize: isDownMd ? '.8rem' : '.9rem',
+                    color: 'lightgray',
+                    maxHeight: '100%',
+                  }}
+                >
+                  {movieDetail.overview}
+                </Typography>
+              </Box>
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                }}
+              >
+                <Button
+                  variant='outlined'
+                  sx={{
+                    mr: '1rem',
+                  }}
+                  size={isDownMd ? (isDownSm ? 'small' : 'medium') : 'large'}
+                >
+                  Comment
+                </Button>
+                <Rating
+                  sx={{
+                    fontSize: isDownMd
+                      ? isDownSm
+                        ? '2rem'
+                        : '2.2rem'
+                      : '2.8rem',
+                    '& .MuiRating-icon': {
+                      color: (theme) => theme.palette.primary.main,
+                    },
+                  }}
+                  precision={0.5}
+                />
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
       ) : null}
     </Box>
   );
