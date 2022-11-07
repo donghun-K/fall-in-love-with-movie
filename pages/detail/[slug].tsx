@@ -2,20 +2,74 @@ import { GetStaticProps, GetStaticPaths } from 'next/types';
 import Typography from '@mui/material/Typography';
 import { Box, Grid, Rating } from '@mui/material';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const DUMMY_DATA = {
-  title: 'Dummy Title',
-  min: '139분',
-  genre: '액션, 코미디 ',
-  pubDate: '2022',
-  synopsis:
-    '미국에 이민 와 힘겹게 세탁소를 운영하던 에블린은 세무당국의 조사에 시달리던 어느 날 남편의 이혼 요구와 삐딱하게 구는 딸로 인해 대혼란에 빠진다. 그 순간 에블린은 멀티버스 안에서 수천, 수만의 자신이 세상을 살아가고 있다는 사실을 알게 되고, 그 모든 능력을 빌려와 위기의 세상과 가족을 구해야 하는 운명에 처한다.',
-  image:
-    'https://movie-phinf.pstatic.net/20220923_263/1663900781920FODkW_JPEG/movie_image.jpg',
+interface Detail {
+  adult: boolean;
+  backdrop_path: string;
+  belongs_to_collection: string;
+  budget: number;
+  genres: [
+    {
+      id: number;
+      name: string;
+    }
+  ];
+  homepage: string;
+  id: number;
+  imdb_id: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  production_companies: [
+    {
+      id: number;
+      logo_path: string;
+      name: string;
+      origin_country: string;
+    }
+  ];
+  production_countries: [
+    {
+      iso_3166_1: string;
+      name: string;
+    }
+  ];
+  release_date: string;
+  revenue: number;
+  runtime: number;
+  spoken_languages: [
+    {
+      iso_639_1: string;
+      name: string;
+    }
+  ];
+  status: string;
+  tagline: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
+const getMovieDetail = async (movieId: string) => {
+  const response = await axios.post('/api/detail', {
+    movieId: movieId,
+  });
+  const data = response.data.data;
+  return data;
 };
 
 const DetailPage = (props: { data: string }) => {
-  const movieId = props.data;
+  const [movieDetail, setMovieDetail] = useState<Detail>();
+  useEffect(() => {
+    getMovieDetail(props.data).then((res) => {
+      setMovieDetail(res);
+    });
+  }, [props]);
   return (
     <Box
       sx={{
@@ -23,63 +77,67 @@ const DetailPage = (props: { data: string }) => {
         flexDirection: 'column',
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          mt: '5rem',
-        }}
-      >
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={5}>
-            <Image
-              src={DUMMY_DATA.image}
-              width={288}
-              height={400}
-              alt={DUMMY_DATA.title}
-            />
-          </Grid>
-          <Grid item xs={12} md={6} lg={7}>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                height: '400px',
-              }}
-            >
-              <Box>
-                <Typography variant='subtitle1' color='primary'>
-                  {DUMMY_DATA.pubDate}
-                </Typography>
-                <Typography variant='h3' mt={1} mb={1} color='primary'>
-                  {DUMMY_DATA.title}
-                </Typography>
-                <Typography variant='subtitle1' color='primary'>
-                  {DUMMY_DATA.min} | {DUMMY_DATA.genre}
-                </Typography>
-              </Box>
-              <Typography variant='body1' color='primary'>
-                {DUMMY_DATA.synopsis}
-              </Typography>
-              <Box>
-                <Rating
-                  sx={{
-                    fontSize: '4rem',
-                    '& .MuiRating-icon': {
-                      color: (theme) => theme.palette.primary.main,
-                    },
-                  }}
-                  precision={0.5}
+      {movieDetail !== undefined ? (
+        <>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              mt: '5rem',
+            }}
+          >
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6} lg={5}>
+                <Image
+                  src={`https://image.tmdb.org/t/p/original/${movieDetail.poster_path}`}
+                  width={288}
+                  height={400}
+                  alt={movieDetail.title}
                 />
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
-      <Box>
-        <Typography>Comments</Typography>
-      </Box>
+              </Grid>
+              <Grid item xs={12} md={6} lg={7}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    height: '400px',
+                  }}
+                >
+                  <Box>
+                    <Typography variant='subtitle1' color='primary'>
+                      {movieDetail.release_date}
+                    </Typography>
+                    <Typography variant='h3' mt={1} mb={1} color='primary'>
+                      {movieDetail.title}
+                    </Typography>
+                    <Typography variant='subtitle1' color='primary'>
+                      {movieDetail.runtime}
+                    </Typography>
+                  </Box>
+                  <Typography variant='body1' color='primary'>
+                    {movieDetail.overview}
+                  </Typography>
+                  <Box>
+                    <Rating
+                      sx={{
+                        fontSize: '4rem',
+                        '& .MuiRating-icon': {
+                          color: (theme) => theme.palette.primary.main,
+                        },
+                      }}
+                      precision={0.5}
+                    />
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+          <Box>
+            <Typography>Comments</Typography>
+          </Box>
+        </>
+      ) : null}
     </Box>
   );
 };

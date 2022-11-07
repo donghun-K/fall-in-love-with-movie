@@ -13,7 +13,6 @@ const MovieCard = ({
   poster: string;
   id: number;
 }) => {
-  console.log(poster);
   return (
     <Box
       sx={{
@@ -60,7 +59,7 @@ const MovieCard = ({
           color: 'white',
         }}
       >
-        <Link href={`/detail/test`}>
+        <Link href={`/detail/${id}`}>
           <Tooltip title={title}>
             <Typography
               sx={{

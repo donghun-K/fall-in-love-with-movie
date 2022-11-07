@@ -1,16 +1,12 @@
 import axios from 'axios';
-import { load } from 'cheerio';
 
 async function handler(req: any, res: any) {
   const { movieId } = req.body;
-  const response = await axios.get(
-    `https://movie.naver.com/movie/bi/mi/photoViewPopup.naver?movieCode=${movieId}`
-  );
-  const $ = load(response.data);
-
-  const imageEl = $('#targetImage');
-  const imageSrc = imageEl.attr().src;
-  res.status(201).json({ imageSrc: imageSrc });
+  const response = await axios({
+    url: `https://api.themoviedb.org/3//movie/${movieId}?api_key=${process.env.API_KEY}&language=ko-KR`,
+    method: 'get',
+  });
+  res.status(201).json({ data: response.data });
 }
 
 export default handler;
