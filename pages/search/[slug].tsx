@@ -60,6 +60,7 @@ const SearchPage = (props: { data: string }) => {
             title={item.title}
             release={item.release_date}
             poster={`https://image.tmdb.org/t/p/original/${item.poster_path}`}
+            id={item.id}
             key={item.id}
           />
         ))}

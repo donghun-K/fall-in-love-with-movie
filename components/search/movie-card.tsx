@@ -6,10 +6,12 @@ const MovieCard = ({
   title,
   release,
   poster,
+  id,
 }: {
   title: string;
   release: string;
   poster: string;
+  id: number;
 }) => {
   console.log(poster);
   return (
