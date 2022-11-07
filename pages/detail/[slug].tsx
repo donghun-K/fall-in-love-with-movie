@@ -1,10 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next/types';
 import Typography from '@mui/material/Typography';
-import { Box, Grid, Rating, useMediaQuery } from '@mui/material';
+import { Box, Grid, Rating } from '@mui/material';
 import Image from 'next/image';
-import theme from '../../src/theme';
-import { useEffect, useState } from 'react';
-import { getImageSrc } from '../../lib/detail';
 
 const DUMMY_DATA = {
   title: 'Dummy Title',
@@ -18,18 +15,7 @@ const DUMMY_DATA = {
 };
 
 const DetailPage = (props: { data: string }) => {
-  const isDownMd = useMediaQuery(theme.breakpoints.down('md'));
-  const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
-
-  const [imageSrc, setImageSrc] = useState<string>('');
-
-  useEffect(() => {
-    if (props.data !== undefined) {
-      getImageSrc(props.data).then((res) => {
-        setImageSrc(res);
-      });
-    }
-  }, [props.data]);
+  const movieId = props.data;
   return (
     <Box
       sx={{
@@ -37,112 +23,60 @@ const DetailPage = (props: { data: string }) => {
         flexDirection: 'column',
       }}
     >
-      <Grid
-        container
-        spacing={0}
+      <Box
         sx={{
           display: 'flex',
           flexDirection: 'row',
-          justifyContent: 'center',
-          mt: isDownMd ? '1rem' : '5rem',
+          mt: '5rem',
         }}
       >
-        <Grid
-          item
-          xs={10}
-          sm={5}
-          md={6}
-          lg={5}
-          padding={isDownSm ? '1rem' : 0}
-          sx={{
-            display: 'flex',
-            justifyContent: isDownMd ? 'center' : 'flex-start',
-          }}
-        >
-          {imageSrc !== '' && (
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6} lg={5}>
             <Image
-              src={imageSrc}
-              width={isDownMd ? (isDownSm ? 324 : 216) : 288}
-              height={isDownMd ? (isDownSm ? 450 : 300) : 400}
+              src={DUMMY_DATA.image}
+              width={288}
+              height={400}
               alt={DUMMY_DATA.title}
             />
-          )}
-        </Grid>
-        <Grid item xs={10} sm={5} md={6} lg={7} pl={isDownMd ? 1 : 0}>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: isDownSm ? 'center' : 'space-between',
-              height: isDownMd ? '300px' : '400px',
-            }}
-          >
-            <Box>
-              <Typography
-                variant='subtitle1'
-                color='primary'
-                sx={{
-                  fontSize: isDownMd ? '.6rem' : '.8rem',
-                  color: 'gray',
-                  fontWeight: 'bolder',
-                }}
-              >
-                {DUMMY_DATA.pubDate}
-              </Typography>
-              <Typography
-                variant='h3'
-                mb={1}
-                color='primary'
-                sx={{
-                  fontSize: isDownMd ? '1.8rem' : '2.5rem',
-                  color: 'white',
-                  fontWeight: 'bolder',
-                }}
-              >
-                {DUMMY_DATA.title}
-              </Typography>
-              <Typography
-                variant='subtitle1'
-                color='primary'
-                sx={{
-                  fontSize: isDownMd ? '.6rem' : '.8rem',
-                  color: 'gray',
-                  fontWeight: 'bolder',
-                }}
-              >
-                {DUMMY_DATA.min} | {DUMMY_DATA.genre}
-              </Typography>
-            </Box>
-            <Typography
-              variant='body1'
-              color='primary'
-              mt={isDownSm ? 1 : 0}
-              mb={isDownSm ? 1 : 0}
+          </Grid>
+          <Grid item xs={12} md={6} lg={7}>
+            <Box
               sx={{
-                fontSize: isDownMd ? '.8rem' : '.9rem',
-                color: 'lightgray',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                height: '400px',
               }}
             >
-              {DUMMY_DATA.synopsis}
-            </Typography>
-            <Box>
-              <Rating
-                sx={{
-                  fontSize: isDownMd
-                    ? isDownSm
-                      ? '2.8rem'
-                      : '2.3rem'
-                    : '3.5rem',
-                  '& .MuiRating-icon': {
-                    color: (theme) => theme.palette.primary.main,
-                  },
-                }}
-                precision={0.5}
-              />
+              <Box>
+                <Typography variant='subtitle1' color='primary'>
+                  {DUMMY_DATA.pubDate}
+                </Typography>
+                <Typography variant='h3' mt={1} mb={1} color='primary'>
+                  {DUMMY_DATA.title}
+                </Typography>
+                <Typography variant='subtitle1' color='primary'>
+                  {DUMMY_DATA.min} | {DUMMY_DATA.genre}
+                </Typography>
+              </Box>
+              <Typography variant='body1' color='primary'>
+                {DUMMY_DATA.synopsis}
+              </Typography>
+              <Box>
+                <Rating
+                  sx={{
+                    fontSize: '4rem',
+                    '& .MuiRating-icon': {
+                      color: (theme) => theme.palette.primary.main,
+                    },
+                  }}
+                  precision={0.5}
+                />
+              </Box>
             </Box>
-          </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      </Box>
       <Box>
         <Typography>Comments</Typography>
       </Box>
