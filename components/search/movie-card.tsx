@@ -1,6 +1,7 @@
-import { Box, Typography, Tooltip } from '@mui/material';
+import { Box, Typography, Tooltip, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
+import theme from '../../src/theme';
 
 const MovieCard = ({
   title,
@@ -13,13 +14,14 @@ const MovieCard = ({
   poster: string;
   id: number;
 }) => {
+  const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Box
       sx={{
         userSelect: 'none',
         position: 'relative',
-        width: '200px',
-        hegiht: '300px',
+        width: isDownSm ? '160px' : '200px',
+        hegiht: isDownSm ? '240px' : '300px',
         margin: '15px 10px',
         borderRadius: '10px',
         overflow: 'hidden',

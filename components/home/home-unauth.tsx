@@ -4,9 +4,16 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import Link from 'next/link';
+import { useMediaQuery } from '@mui/material';
+import theme from '../../src/theme';
 
 const HomeUnauth = () => {
-  const initialSx = { color: 'primary.main', display: 'inline' };
+  const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const initialSx = {
+    color: 'primary.main',
+    display: 'inline',
+    fontSize: isDownSm ? '3.5rem' : '4rem',
+  };
   return (
     <Box
       sx={{
@@ -27,41 +34,30 @@ const HomeUnauth = () => {
       >
         <Image
           src={'/images/logo/logo3.png'}
-          width={280}
-          height={220}
+          width={isDownSm ? 252 : 280}
+          height={isDownSm ? 198 : 220}
           alt='FILM'
         />
         <Box sx={{ textAlign: 'center' }}>
           <Typography
-            variant='h5'
             sx={{
               color: 'white',
+              fontSize: isDownSm ? '1.2rem' : '1.6rem',
             }}
           >
             Movie Star Ratings
           </Typography>
           <Box
             sx={{
-              fontSize: '2rem',
+              fontSize: isDownSm ? '1.6rem' : '2rem',
               color: 'white',
               fontWeight: '700',
             }}
           >
-            <Typography variant='h2' sx={initialSx}>
-              F
-            </Typography>
-            all{' '}
-            <Typography variant='h2' sx={initialSx}>
-              I
-            </Typography>
-            n{' '}
-            <Typography variant='h2' sx={initialSx}>
-              L
-            </Typography>
-            ove with{' '}
-            <Typography variant='h2' sx={initialSx}>
-              M
-            </Typography>
+            <Typography sx={initialSx}>F</Typography>
+            all <Typography sx={initialSx}>I</Typography>n{' '}
+            <Typography sx={initialSx}>L</Typography>
+            ove with <Typography sx={initialSx}>M</Typography>
             ovie
           </Box>
         </Box>

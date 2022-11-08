@@ -8,6 +8,7 @@ import {
   Dialog,
   DialogActions,
   DialogTitle,
+  useMediaQuery,
 } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import LoginIcon from '@mui/icons-material/Login';
@@ -16,8 +17,11 @@ import { NextPage } from 'next/types';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import theme from '../src/theme';
 
 const AuthPage: NextPage = () => {
+  const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
+
   const [isSignIn, setIsSignIn] = useState(true);
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
@@ -141,7 +145,7 @@ const AuthPage: NextPage = () => {
         color: 'white',
       },
     },
-    width: '400px',
+    width: isDownSm ? '300px' : '400px',
   };
 
   return (

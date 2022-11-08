@@ -2,8 +2,9 @@ import Typography from '@mui/material/Typography';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery } from '@mui/material';
 import MovieCard from '../../components/search/movie-card';
+import theme from '../../src/theme';
 
 interface Data {
   poster_path: string;
@@ -38,14 +39,22 @@ const SearchPage = (props: { data: string }) => {
       setMovieData(res.results);
     });
   }, [props]);
-
+  const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Box
       sx={{
         pt: '20px',
       }}
     >
-      <Typography variant='h4' ml={5} mt={1} mb={1} color='primary'>
+      <Typography
+        sx={{
+          fontSize: isDownSm ? '1.5rem' : '2.5rem',
+        }}
+        ml={5}
+        mt={1}
+        mb={1}
+        color='primary'
+      >
         &apos;{props.data}&apos; 검색 결과
       </Typography>
       <Box

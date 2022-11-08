@@ -1,13 +1,16 @@
 import {
   AppBar,
+  Drawer,
   Toolbar,
   Typography,
   Grid,
   Button,
+  List,
   useMediaQuery,
 } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import Image from 'next/image';
 import { Box } from '@mui/system';
 import SearchBar from './search-bar';
@@ -15,10 +18,16 @@ import theme from '../../../src/theme';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { signOut } from 'next-auth/react';
+import { useState } from 'react';
+import DrawerSearchBar from './drawer-search-bar';
 
 const NavBar = () => {
   const { data: session, status } = useSession();
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   const isUpLg = useMediaQuery(theme.breakpoints.up('lg'));
+  const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
 
   const buttonSx = {
     height: 50,
@@ -49,8 +58,8 @@ const NavBar = () => {
               <Button>
                 <Image
                   src={'/images/logo/logo1.png'}
-                  width={160}
-                  height={60}
+                  width={isDownSm ? 146 : 160}
+                  height={isDownSm ? 54 : 60}
                   alt='FILM'
                 />
               </Button>
@@ -61,7 +70,20 @@ const NavBar = () => {
                 flexDirection: 'row',
               }}
             >
-              <SearchBar />
+              {isDownSm ? (
+                <Button
+                  variant='text'
+                  sx={buttonSx}
+                  onClick={() => {
+                    setDrawerOpen(true);
+                  }}
+                >
+                  <SearchRoundedIcon fontSize='large' />
+                </Button>
+              ) : (
+                <SearchBar />
+              )}
+
               {status === 'authenticated' ? (
                 <Button
                   variant='text'
@@ -94,6 +116,24 @@ const NavBar = () => {
         </Grid>
         <Grid item xs={0} md={1} lg={2} />
       </Grid>
+      <Drawer
+        anchor='top'
+        open={drawerOpen}
+        onClose={() => {
+          setDrawerOpen(false);
+        }}
+      >
+        <List
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            backgroundColor: '#111111',
+            padding: '2rem 0',
+          }}
+        >
+          <DrawerSearchBar />
+        </List>
+      </Drawer>
     </AppBar>
   );
 };
