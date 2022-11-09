@@ -1,15 +1,20 @@
 import {
   AppBar,
+  Button,
   Drawer,
+  Grid,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
   Toolbar,
   Typography,
-  Grid,
-  Button,
-  List,
   useMediaQuery,
 } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
+import MenuIcon from '@mui/icons-material/Menu';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import Image from 'next/image';
 import { Box } from '@mui/system';
@@ -19,7 +24,6 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { signOut } from 'next-auth/react';
 import { useState } from 'react';
-import DrawerSearchBar from './drawer-search-bar';
 
 const NavBar = () => {
   const { data: session, status } = useSession();
@@ -78,38 +82,39 @@ const NavBar = () => {
                     setDrawerOpen(true);
                   }}
                 >
-                  <SearchRoundedIcon fontSize='large' />
+                  <MenuIcon fontSize='large' />
                 </Button>
               ) : (
-                <SearchBar />
-              )}
-
-              {status === 'authenticated' ? (
-                <Button
-                  variant='text'
-                  sx={buttonSx}
-                  onClick={() => {
-                    signOut({ redirect: false });
-                  }}
-                >
-                  <LogoutIcon fontSize='large' />
-                  {isUpLg && (
-                    <Typography variant='subtitle2' pt={2} ml={0.5}>
-                      Sign Out
-                    </Typography>
+                <>
+                  <SearchBar />
+                  {status === 'authenticated' ? (
+                    <Button
+                      variant='text'
+                      sx={buttonSx}
+                      onClick={() => {
+                        signOut({ redirect: false });
+                      }}
+                    >
+                      <LogoutIcon fontSize='large' />
+                      {isUpLg && (
+                        <Typography variant='subtitle2' pt={2} ml={0.5}>
+                          Sign Out
+                        </Typography>
+                      )}
+                    </Button>
+                  ) : (
+                    <Link href={'/auth'}>
+                      <Button variant='text' sx={buttonSx}>
+                        {isUpLg && (
+                          <Typography variant='subtitle2' pt={2} mr={0.5}>
+                            Sign In
+                          </Typography>
+                        )}
+                        <LoginIcon fontSize='large' />
+                      </Button>
+                    </Link>
                   )}
-                </Button>
-              ) : (
-                <Link href={'/auth'}>
-                  <Button variant='text' sx={buttonSx}>
-                    {isUpLg && (
-                      <Typography variant='subtitle2' pt={2} mr={0.5}>
-                        Sign In
-                      </Typography>
-                    )}
-                    <LoginIcon fontSize='large' />
-                  </Button>
-                </Link>
+                </>
               )}
             </Box>
           </Toolbar>
@@ -122,16 +127,67 @@ const NavBar = () => {
         onClose={() => {
           setDrawerOpen(false);
         }}
+        sx={{
+          ul: {
+            backgroundColor: (theme) => theme.palette.nav.main,
+            color: (theme) => theme.palette.primary.light,
+            'li div': {
+              padding: '.5rem',
+            },
+            svg: {
+              margin: '0 1rem',
+              color: (theme) => theme.palette.primary.light,
+            },
+          },
+        }}
       >
-        <List
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            backgroundColor: '#111111',
-            padding: '2rem 0',
-          }}
-        >
-          <DrawerSearchBar />
+        {status === 'authenticated' ? (
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  setDrawerOpen(false);
+                  signOut({ redirect: false });
+                }}
+              >
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary='Sign Out' />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        ) : (
+          <Link href={'/auth'}>
+            <List>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <ListItemIcon>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText primary='Sign In' />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Link>
+        )}
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton
+              onClick={() => {
+                setDrawerOpen(false);
+              }}
+            >
+              <ListItemIcon>
+                <SearchRoundedIcon />
+              </ListItemIcon>
+              <ListItemText primary='Search' />
+            </ListItemButton>
+          </ListItem>
         </List>
       </Drawer>
     </AppBar>
