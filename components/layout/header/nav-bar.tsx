@@ -1,6 +1,10 @@
 import {
   AppBar,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Drawer,
   Grid,
   List,
@@ -8,6 +12,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  TextField,
   Toolbar,
   Typography,
   useMediaQuery,
@@ -29,6 +34,7 @@ const NavBar = () => {
   const { data: session, status } = useSession();
 
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const isUpLg = useMediaQuery(theme.breakpoints.up('lg'));
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
@@ -36,6 +42,10 @@ const NavBar = () => {
   const buttonSx = {
     height: 50,
     '&:hover': { color: 'primary.light' },
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
   };
 
   return (
@@ -180,6 +190,7 @@ const NavBar = () => {
             <ListItemButton
               onClick={() => {
                 setDrawerOpen(false);
+                setDialogOpen(true);
               }}
             >
               <ListItemIcon>
@@ -190,6 +201,24 @@ const NavBar = () => {
           </ListItem>
         </List>
       </Drawer>
+      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin='dense'
+            label='Movie title'
+            type='text'
+            fullWidth
+            variant='standard'
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button type='submit' onClick={handleDialogClose}>
+            Search
+          </Button>
+          <Button onClick={handleDialogClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
     </AppBar>
   );
 };

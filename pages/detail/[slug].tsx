@@ -169,8 +169,22 @@ const DetailPage = (props: { data: string }) => {
                   flexDirection: 'column',
                   justifyContent: 'center',
                   height: isDownSm ? '120px' : '200px',
-                  overflow: 'scroll',
+                  overflow: 'auto',
                   margin: isDownSm ? '1rem 0' : 0,
+                  '&::-webkit-scrollbar': {
+                    width: '10px',
+                  },
+                  '&::-webkit-scrollbar-thumb': {
+                    background: 'lightgray',
+                    backgroundClip: 'padding-box',
+                    border: '2px solid transparent',
+                    borderRadius: '10px',
+                  },
+                  '&::-webkit-scrollbar-track': {
+                    backgroundColor: 'black',
+                    borderRadius: '10px',
+                    boxShadow: 'inset 0 0 5px white',
+                  },
                 }}
               >
                 <Typography
