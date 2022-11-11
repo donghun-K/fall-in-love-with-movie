@@ -29,15 +29,19 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { signOut } from 'next-auth/react';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 const NavBar = () => {
   const { data: session, status } = useSession();
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
 
   const isUpLg = useMediaQuery(theme.breakpoints.up('lg'));
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const router = useRouter();
 
   const buttonSx = {
     height: 50,
@@ -46,6 +50,16 @@ const NavBar = () => {
 
   const handleDialogClose = () => {
     setDialogOpen(false);
+  };
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+    if (searchInput === '') {
+      return;
+    }
+    router.replace(`/search/${searchInput}`);
   };
 
   return (
@@ -201,23 +215,53 @@ const NavBar = () => {
           </ListItem>
         </List>
       </Drawer>
-      <Dialog open={dialogOpen} onClose={handleDialogClose}>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin='dense'
-            label='Movie title'
-            type='text'
-            fullWidth
-            variant='standard'
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button type='submit' onClick={handleDialogClose}>
-            Search
-          </Button>
-          <Button onClick={handleDialogClose}>Cancel</Button>
-        </DialogActions>
+      <Dialog
+        open={dialogOpen}
+        onClose={handleDialogClose}
+        sx={{
+          '& .MuiDialog-paper': {
+            backgroundColor: '#111111',
+          },
+        }}
+      >
+        <form onSubmit={handleSubmit}>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin='dense'
+              label='Enter movie title'
+              type='text'
+              fullWidth
+              variant='standard'
+              onChange={(e) => {
+                setSearchInput(e.target.value);
+              }}
+              sx={{
+                '& label': {
+                  color: 'gray',
+                },
+                '& label.Mui-focused': {
+                  color: 'primary.main',
+                },
+                '& .MuiInput-root:before': {
+                  borderBottomColor: 'lightgray',
+                },
+                '& .MuiInputBase-root:hover:not(.Mui-diabled):before': {
+                  borderBottomColor: 'gray',
+                },
+                input: {
+                  color: 'white',
+                },
+              }}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button type='submit' onClick={handleDialogClose}>
+              Search
+            </Button>
+            <Button onClick={handleDialogClose}>Cancel</Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </AppBar>
   );
