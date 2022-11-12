@@ -69,6 +69,7 @@ const DetailPage = (props: { data: string }) => {
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [movieDetail, setMovieDetail] = useState<Detail>();
+  const [rating, setRating] = useState(0);
 
   useEffect(() => {
     getMovieDetail(props.data).then((res) => {
@@ -119,21 +120,17 @@ const DetailPage = (props: { data: string }) => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: isDownSm ? 'center' : 'space-between',
+                alignItems: isDownMd ? 'center' : 'flex-start',
                 height: isDownMd ? '300px' : '400px',
               }}
             >
-              <Box>
-                <Typography
-                  variant='subtitle1'
-                  color='primary'
-                  sx={{
-                    fontSize: isDownMd ? '.7rem' : '.8rem',
-                    color: 'gray',
-                    fontWeight: 'bolder',
-                  }}
-                >
-                  {movieDetail.release_date.match(/[0-9]{4}/)}
-                </Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: isDownMd ? 'center' : 'flex-start',
+                }}
+              >
                 <Typography
                   variant='h3'
                   mt={1}
@@ -151,15 +148,17 @@ const DetailPage = (props: { data: string }) => {
                 >
                   {movieDetail.title}
                 </Typography>
+
                 <Typography
                   variant='subtitle1'
                   color='primary'
                   sx={{
                     fontSize: isDownMd ? '.7rem' : '.8rem',
-                    color: 'gray',
+                    color: 'lightgray',
                     fontWeight: 'bolder',
                   }}
                 >
+                  {movieDetail.release_date.match(/[0-9]{4}/)} |{' '}
                   {movieDetail.runtime} min |{' '}
                   {movieDetail.genres.map((item) => item.name).join(', ')}
                 </Typography>
@@ -205,31 +204,35 @@ const DetailPage = (props: { data: string }) => {
               <Box
                 sx={{
                   display: 'flex',
+                  flexDirection: isDownSm ? 'column-reverse' : 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
                 }}
               >
-                <Button
-                  variant='outlined'
-                  sx={{
-                    mr: '1rem',
-                  }}
-                  size={isDownMd ? (isDownSm ? 'small' : 'medium') : 'large'}
-                >
-                  Comment
-                </Button>
                 <Rating
                   sx={{
-                    fontSize: isDownMd
-                      ? isDownSm
-                        ? '2rem'
-                        : '2.2rem'
-                      : '2.8rem',
+                    fontSize: isDownSm ? '2.5rem' : '2.8rem',
                     '& .MuiRating-icon': {
                       color: (theme) => theme.palette.primary.main,
                     },
                   }}
+                  onChange={(e, value) => {
+                    if (value !== null) {
+                      setRating(value);
+                    } else {
+                      setRating(0);
+                    }
+                  }}
                 />
+                <Typography
+                  ml={isDownSm ? 0 : 2}
+                  sx={{
+                    fontSize: isDownSm ? '1rem' : '1.3rem',
+                  }}
+                  color='primary'
+                >
+                  {rating !== 0 ? `${rating} / 5` : 'Rate this movie!'}
+                </Typography>
               </Box>
             </Box>
           </Grid>
