@@ -228,7 +228,6 @@ const DetailPage = (props: { data: string }) => {
                       color: (theme) => theme.palette.primary.main,
                     },
                   }}
-                  precision={0.5}
                 />
               </Box>
             </Box>
