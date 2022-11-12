@@ -20,6 +20,7 @@ import {
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import Image from 'next/image';
 import { Box } from '@mui/system';
@@ -112,20 +113,32 @@ const NavBar = () => {
                 <>
                   <SearchBar />
                   {status === 'authenticated' ? (
-                    <Button
-                      variant='text'
-                      sx={buttonSx}
-                      onClick={() => {
-                        signOut({ redirect: false });
-                      }}
-                    >
-                      <LogoutIcon fontSize='large' />
-                      {isUpLg && (
-                        <Typography variant='subtitle2' pt={2} ml={0.5}>
-                          Sign Out
-                        </Typography>
-                      )}
-                    </Button>
+                    <>
+                      <Link href={'/mypage'}>
+                        <Button variant='text' sx={buttonSx}>
+                          <AccountCircleIcon fontSize='large' />
+                          {isUpLg && (
+                            <Typography variant='subtitle2' pt={2} ml={0.5}>
+                              My Page
+                            </Typography>
+                          )}
+                        </Button>
+                      </Link>
+                      <Button
+                        variant='text'
+                        sx={buttonSx}
+                        onClick={() => {
+                          signOut({ redirect: false });
+                        }}
+                      >
+                        <LogoutIcon fontSize='large' />
+                        {isUpLg && (
+                          <Typography variant='subtitle2' pt={2} ml={0.5}>
+                            Sign Out
+                          </Typography>
+                        )}
+                      </Button>
+                    </>
                   ) : (
                     <Link href={'/auth'}>
                       <Button variant='text' sx={buttonSx}>
@@ -166,21 +179,39 @@ const NavBar = () => {
         }}
       >
         {status === 'authenticated' ? (
-          <List>
-            <ListItem disablePadding>
-              <ListItemButton
-                onClick={() => {
-                  setDrawerOpen(false);
-                  signOut({ redirect: false });
-                }}
-              >
-                <ListItemIcon>
-                  <LogoutIcon />
-                </ListItemIcon>
-                <ListItemText primary='Sign Out' />
-              </ListItemButton>
-            </ListItem>
-          </List>
+          <>
+            <Link href={'/mypage'}>
+              <List>
+                <ListItem disablePadding>
+                  <ListItemButton
+                    onClick={() => {
+                      setDrawerOpen(false);
+                    }}
+                  >
+                    <ListItemIcon>
+                      <AccountCircleIcon />
+                    </ListItemIcon>
+                    <ListItemText primary='My Page' />
+                  </ListItemButton>
+                </ListItem>
+              </List>
+            </Link>
+            <List>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    setDrawerOpen(false);
+                    signOut({ redirect: false });
+                  }}
+                >
+                  <ListItemIcon>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText primary='Sign Out' />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </>
         ) : (
           <Link href={'/auth'}>
             <List>
