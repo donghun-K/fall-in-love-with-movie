@@ -39,19 +39,15 @@ const HomeAuth = () => {
   }, []);
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
   return (
-    <Box
-      sx={{
-        pt: '20px',
-      }}
-    >
+    <Box>
       <Typography
         sx={{
-          fontSize: isDownSm ? '1.5rem' : '2.5rem',
+          color: 'white',
+          fontWeight: 'bolder',
+          fontSize: isDownSm ? '1.5rem' : '2rem',
         }}
-        ml={5}
-        mt={1}
-        mb={1}
-        color='primary'
+        ml={isDownSm ? 3 : 5}
+        mt={isDownSm ? 0 : 3}
       >
         상영 중인 영화
       </Typography>

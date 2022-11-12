@@ -41,22 +41,37 @@ const SearchPage = (props: { data: string }) => {
   }, [props]);
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
   return (
-    <Box
-      sx={{
-        pt: '20px',
-      }}
-    >
-      <Typography
+    <Box>
+      <Box
         sx={{
-          fontSize: isDownSm ? '1.5rem' : '2.5rem',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'flex-end',
         }}
-        ml={5}
-        mt={1}
-        mb={1}
-        color='primary'
+        ml={isDownSm ? 3 : 5}
+        mt={isDownSm ? 0 : 3}
       >
-        &apos;{props.data}&apos; 검색 결과
-      </Typography>
+        <Typography
+          sx={{
+            color: (theme) => theme.palette.primary.main,
+            fontSize: isDownSm ? '2rem' : '2.5rem',
+            fontWeight: 'bolder',
+          }}
+          mr={1}
+        >
+          &apos;{props.data}&apos;
+        </Typography>
+        <Typography
+          sx={{
+            color: 'white',
+            fontWeight: 'bolder',
+            fontSize: isDownSm ? '1.5rem' : '2rem',
+          }}
+        >
+          검색 결과
+        </Typography>
+      </Box>
+
       <Box
         sx={{
           display: 'flex',
