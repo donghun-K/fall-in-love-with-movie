@@ -16,7 +16,6 @@ async function handler(req: any, res: any) {
     }
 
     const client = await connectToDatabase();
-
     const db = client.db('film');
 
     const existingUser = await db.collection('users').findOne({ email: email });

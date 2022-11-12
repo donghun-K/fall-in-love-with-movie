@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import theme from '../../src/theme';
+import { useSession } from 'next-auth/react';
 
 interface Detail {
   adult: boolean;
@@ -55,6 +56,12 @@ interface Detail {
   vote_average: number;
   vote_count: number;
 }
+declare module 'axios' {
+  export interface AxiosRequestConfig {
+    username?: string | undefined | null;
+    movieCode?: string;
+  }
+}
 
 const getMovieDetail = async (movieId: string) => {
   const response = await axios.post('/api/detail', {
@@ -64,18 +71,61 @@ const getMovieDetail = async (movieId: string) => {
   return data;
 };
 
+const postRating = async ({
+  username,
+  movieCode,
+  rating,
+}: {
+  username: string | undefined | null;
+  movieCode: string;
+  rating: number | null;
+}) => {
+  const response = await axios.post('/api/rating', {
+    username,
+    movieCode,
+    rating,
+  });
+};
+
+const getRating = async ({
+  username,
+  movieCode,
+}: {
+  username: string | undefined | null;
+  movieCode: string;
+}) => {
+  const response = await axios.get('/api/rating', {
+    params: { username, movieCode },
+  });
+
+  return response;
+};
+
 const DetailPage = (props: { data: string }) => {
   const isDownMd = useMediaQuery(theme.breakpoints.down('md'));
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const { data: session, status } = useSession();
+
   const [movieDetail, setMovieDetail] = useState<Detail>();
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState<number | null>(null);
 
   useEffect(() => {
     getMovieDetail(props.data).then((res) => {
       setMovieDetail(res);
     });
   }, [props]);
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      setRating(null);
+      return;
+    }
+    getRating({ username: session?.user?.name, movieCode: props.data }).then(
+      (res) => {
+        setRating(res.data.rating);
+      }
+    );
+  }, [status, session, props]);
 
   return (
     <Box
@@ -216,12 +266,25 @@ const DetailPage = (props: { data: string }) => {
                       color: (theme) => theme.palette.primary.main,
                     },
                   }}
+                  value={rating}
                   onChange={(e, value) => {
+                    if (status === 'unauthenticated') {
+                      alert('Sign In First!');
+                      return;
+                    }
+                    if (rating === value) {
+                      return;
+                    }
                     if (value !== null) {
                       setRating(value);
                     } else {
-                      setRating(0);
+                      setRating(null);
                     }
+                    postRating({
+                      username: session?.user?.name,
+                      movieCode: props.data,
+                      rating: value,
+                    });
                   }}
                 />
                 <Typography
@@ -231,7 +294,9 @@ const DetailPage = (props: { data: string }) => {
                   }}
                   color='primary'
                 >
-                  {rating !== 0 ? `${rating} / 5` : 'Rate this movie!'}
+                  {rating !== null && rating !== undefined
+                    ? `${rating} / 5`
+                    : 'Rate this movie!'}
                 </Typography>
               </Box>
             </Box>
