@@ -4,7 +4,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
   Drawer,
   Grid,
   List,
@@ -47,6 +46,9 @@ const NavBar = () => {
   const buttonSx = {
     height: 50,
     '&:hover': { color: 'primary.light' },
+    h6: {
+      fontWeight: 'bolder',
+    },
   };
 
   const handleDialogClose = () => {

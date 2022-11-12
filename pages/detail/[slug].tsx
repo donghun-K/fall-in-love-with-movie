@@ -136,6 +136,7 @@ const DetailPage = (props: { data: string }) => {
                 </Typography>
                 <Typography
                   variant='h3'
+                  mt={1}
                   mb={1}
                   color='primary'
                   sx={{
