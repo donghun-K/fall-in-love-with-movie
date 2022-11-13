@@ -28,7 +28,7 @@ export default NextAuth({
         });
 
         if (!dbUser) {
-          throw new Error('No user found!');
+          throw new Error('사용자를 찾을 수 없습니다.');
         }
 
         const isValid = await verifyPassword(
@@ -37,7 +37,7 @@ export default NextAuth({
         );
 
         if (!isValid) {
-          throw new Error('Wrong Password!');
+          throw new Error('비밀번호가 틀렸습니다.');
         }
         client.close();
 

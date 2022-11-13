@@ -12,7 +12,7 @@ async function handler(req: any, res: any) {
       !password ||
       password.trim().length < 8
     ) {
-      res.status(422).json({ message: 'Invalid input' });
+      res.status(422).json({ message: '유효하지 않은 값입니다.' });
     }
 
     const client = await connectToDatabase();
@@ -22,7 +22,7 @@ async function handler(req: any, res: any) {
 
     if (existingUser) {
       res.status(422).json({
-        message: 'Email exists already!',
+        message: '이미 가입된 이메일입니다.',
       });
       client.close();
       return;
@@ -32,7 +32,7 @@ async function handler(req: any, res: any) {
 
     if (existingName) {
       res.status(422).json({
-        message: 'Username exists already!',
+        message: '이미 사용 중인 이름입니다.',
       });
       client.close();
       return;

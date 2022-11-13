@@ -44,7 +44,7 @@ const AuthPage: NextPage = () => {
     const data = await response.json();
 
     if (!response.ok) {
-      setSnackbarMsg(data.message || 'Sign Up failed');
+      setSnackbarMsg(data.message || '회원가입에 실패했습니다.');
       setSnackbarOpen(true);
       return undefined;
     } else {
@@ -56,15 +56,16 @@ const AuthPage: NextPage = () => {
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
+    let regex = new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,3}');
 
     if (isSignIn) {
-      if (userEmail === '') {
-        setSnackbarMsg('Enter your Email');
+      if (userEmail === '' || !regex.test(userEmail)) {
+        setSnackbarMsg('이메일을 확인해주세요.');
         setSnackbarOpen(true);
         return;
       }
       if (userPw.length < 8) {
-        setSnackbarMsg('Check your Password!');
+        setSnackbarMsg('비밀번호를 8자 이상 입력해주세요.');
         setSnackbarOpen(true);
         return;
       }
@@ -84,28 +85,28 @@ const AuthPage: NextPage = () => {
       }
     }
     if (!isSignIn) {
-      if (userName === '' || userName.length < 5) {
-        setSnackbarMsg('Check your Username!');
+      if (userName.length < 3) {
+        setSnackbarMsg('이름을 3자 이상 입력해주세요.');
         setSnackbarOpen(true);
         return;
       }
-      if (userEmail === '') {
-        setSnackbarMsg('Enter your Email');
+      if (userEmail === '' || !regex.test(userEmail)) {
+        setSnackbarMsg('이메일을 확인해주세요.');
         setSnackbarOpen(true);
         return;
       }
       if (userPw.length < 8) {
-        setSnackbarMsg('Check your Password!');
+        setSnackbarMsg('비밀번호를 8자 이상 입력해주세요.');
         setSnackbarOpen(true);
         return;
       }
       if (userConfirmPw.length < 8) {
-        setSnackbarMsg('Check your Confirm password!');
+        setSnackbarMsg('비밀번호 확인을 8자 이상 입력해주세요.');
         setSnackbarOpen(true);
         return;
       }
       if (userPw !== userConfirmPw) {
-        setSnackbarMsg('Password and Confirm password does not match!');
+        setSnackbarMsg('비밀번호와 비밀번호 확인의 값이 일치하지 않습니다.');
         setSnackbarOpen(true);
         return;
       }
@@ -192,7 +193,7 @@ const AuthPage: NextPage = () => {
           )}
           <TextField
             label='Email'
-            type='email'
+            type='text'
             variant='standard'
             placeholder='example@example.com'
             sx={inputSx}
@@ -278,9 +279,7 @@ const AuthPage: NextPage = () => {
               }}
               onClick={() => setIsSignIn(!isSignIn)}
             >
-              {isSignIn
-                ? "Don't have an account? Sign Up"
-                : 'Sign In with existing account'}
+              {isSignIn ? '계정이 없으신가요?' : '이미 계정이 있으신가요?'}
             </Link>
           </Box>
         </Box>
