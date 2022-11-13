@@ -130,7 +130,7 @@ const NavBar = () => {
                         variant='text'
                         sx={buttonSx}
                         onClick={() => {
-                          alert('Sign Out!');
+                          alert('로그아웃 하였습니다.');
                           signOut({ redirect: false });
                         }}
                       >
@@ -204,7 +204,7 @@ const NavBar = () => {
                 <ListItemButton
                   onClick={() => {
                     setDrawerOpen(false);
-                    alert('Sign Out!');
+                    alert('로그아웃 하였습니다.');
                     signOut({ redirect: false });
                   }}
                 >

@@ -5,17 +5,14 @@ import {
   TextField,
   Typography,
   Snackbar,
-  Dialog,
-  DialogActions,
-  DialogTitle,
   useMediaQuery,
 } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { NextPage } from 'next/types';
-import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import theme from '../src/theme';
 
@@ -29,8 +26,15 @@ const AuthPage: NextPage = () => {
   const [userConfirmPw, setUserConfirmPw] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMsg, setSnackbarMsg] = useState('');
-  const [dialogOpen, setDialogOpen] = useState(false);
   const router = useRouter();
+
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.back();
+    }
+  }, [router, status]);
 
   async function createUser(name: string, email: string, password: string) {
     const response = await fetch('/api/auth/signup', {
@@ -78,7 +82,7 @@ const AuthPage: NextPage = () => {
         return;
       }
       if (!result.error) {
-        setDialogOpen(true);
+        alert('반갑습니다 :)');
       } else {
         setSnackbarMsg(result.error);
         setSnackbarOpen(true);
@@ -114,17 +118,14 @@ const AuthPage: NextPage = () => {
       const result = await createUser(userName, userEmail, userPw);
 
       if (result) {
-        setDialogOpen(true);
+        alert('회원가입에 성공하였습니다!');
+        setIsSignIn(true);
       }
     }
   };
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
-  };
-
-  const handleDialogClose = () => {
-    setDialogOpen(false);
   };
 
   const inputSx = {
@@ -294,39 +295,6 @@ const AuthPage: NextPage = () => {
           {snackbarMsg}
         </MuiAlert>
       </Snackbar>
-      <Dialog
-        sx={{
-          '& .MuiDialog-paper': {
-            backgroundColor: '#111111',
-          },
-        }}
-        open={dialogOpen}
-      >
-        <DialogTitle sx={{ backgroundColor: '#111111', color: 'white' }}>
-          {'Success!'}
-        </DialogTitle>
-        <DialogActions
-          sx={{
-            backgroundColor: '#111111',
-            color: 'white',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <Button
-            onClick={() => {
-              handleDialogClose();
-              if (isSignIn) {
-                router.replace('/');
-              } else {
-                setIsSignIn(true);
-              }
-            }}
-          >
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Box>
   );
 };
