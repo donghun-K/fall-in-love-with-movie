@@ -1,8 +1,8 @@
-import { connectToDatabase } from '../../lib/db';
+import { connectToDatabase } from '../../../lib/db';
 
 async function handler(req: any, res: any) {
   if (req.method === 'POST') {
-    const { username, movieCode, rating } = req.body;
+    const { username, movieCode, comment } = req.body;
     if (username === undefined) {
       return;
     }
@@ -13,7 +13,7 @@ async function handler(req: any, res: any) {
       { username: username, movieCode: movieCode },
       {
         $set: {
-          rating: rating,
+          comment: comment,
         },
       },
       {
@@ -21,7 +21,7 @@ async function handler(req: any, res: any) {
       }
     );
 
-    res.status(201).json({ message: 'Update Rating' });
+    res.status(201).json({ message: 'Update Comment' });
   }
   if (req.method === 'GET') {
     const { username, movieCode } = req.query;
@@ -31,7 +31,7 @@ async function handler(req: any, res: any) {
       username,
       movieCode,
     });
-    res.status(201).json({ rating: response?.rating });
+    res.status(201).json({ comment: response?.comment });
   }
 }
 

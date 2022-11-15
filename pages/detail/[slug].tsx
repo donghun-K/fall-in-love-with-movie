@@ -1,11 +1,12 @@
 import { GetStaticProps, GetStaticPaths } from 'next/types';
 import Typography from '@mui/material/Typography';
-import { Box, Button, Grid, Rating, useMediaQuery } from '@mui/material';
+import { Box, Grid, Rating, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import theme from '../../src/theme';
 import { useSession } from 'next-auth/react';
+import CommentsSection from '../../components/detail/comments-section';
 
 interface Detail {
   adult: boolean;
@@ -303,6 +304,12 @@ const DetailPage = (props: { data: string }) => {
           </Grid>
         </Grid>
       ) : null}
+      <CommentsSection
+        isDownMd={isDownMd}
+        isDownSm={isDownSm}
+        username={session?.user?.name as string}
+        movieCode={props.data}
+      />
     </Box>
   );
 };

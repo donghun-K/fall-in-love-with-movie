@@ -132,14 +132,11 @@ const AuthPage: NextPage = () => {
     '& label': {
       color: 'white',
     },
-    '& label.Mui-focused': {
-      color: 'primary.main',
-    },
     '& .MuiInput-root:before': {
       borderBottomColor: 'white',
     },
     '& .MuiInputBase-root:hover:not(.Mui-diabled):before': {
-      borderBottomColor: 'gray',
+      borderBottomColor: 'white',
     },
     input: {
       color: 'white',
