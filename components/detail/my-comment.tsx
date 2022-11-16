@@ -9,7 +9,7 @@ interface Props {
   movieCode: string;
 }
 
-const MyComment = ({ username, movieCode }: Props) => {
+const MyComment = ({ username, movieCode, isDownMd }: Props) => {
   const [comment, setComment] = useState<string>('');
   const [isEdit, setIsEdit] = useState(true);
 
@@ -65,7 +65,7 @@ const MyComment = ({ username, movieCode }: Props) => {
   }, [username, movieCode]);
 
   return (
-    <Box mt={5}>
+    <Box mt={isDownMd ? 2 : 5}>
       {isEdit ? (
         <form onSubmit={handleSubmit}>
           <TextField
@@ -77,7 +77,7 @@ const MyComment = ({ username, movieCode }: Props) => {
                 borderBottomColor: 'white',
               },
               textarea: {
-                fontSize: '1.2rem',
+                fontSize: isDownMd ? '1rem' : '1.2rem',
                 color: 'white',
                 '&::placeholder': {
                   color: 'white',
@@ -116,7 +116,7 @@ const MyComment = ({ username, movieCode }: Props) => {
         <Box>
           <Typography
             sx={{
-              fontSize: '1.5rem',
+              fontSize: isDownMd ? '1.2rem' : '1.5rem',
               fontWeight: 'bolder',
               color: (theme) => theme.palette.primary.main,
             }}
@@ -130,7 +130,7 @@ const MyComment = ({ username, movieCode }: Props) => {
                 borderBottomColor: 'gray',
               },
               textarea: {
-                fontSize: '1.2rem',
+                fontSize: isDownMd ? '1rem' : '1.2rem',
                 color: 'lightgray',
               },
               pointerEvents: 'none',
@@ -158,7 +158,7 @@ const MyComment = ({ username, movieCode }: Props) => {
           >
             <Button
               variant='outlined'
-              size='large'
+              size={isDownMd ? 'medium' : 'large'}
               onClick={() => {
                 setIsEdit(true);
               }}

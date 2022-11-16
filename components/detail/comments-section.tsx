@@ -16,7 +16,14 @@ const CommentsSection = ({
   isDownSm,
 }: Props) => {
   return (
-    <Box mt={5}>
+    <Box
+      mt={isDownMd ? 10 : 15}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: isDownMd ? 'center' : 'normal',
+      }}
+    >
       <Box
         sx={{
           display: 'flex',
@@ -26,14 +33,14 @@ const CommentsSection = ({
         <ChatBubbleIcon
           sx={{
             color: 'white',
-            fontSize: '2rem',
+            fontSize: isDownMd ? '1.2rem' : '2rem',
             marginRight: '1rem',
           }}
         />
         <Typography
           sx={{
             fontWeight: 'bolder',
-            fontSize: '2.5rem',
+            fontSize: isDownMd ? '1.8rem' : '2.5rem',
             color: 'white',
           }}
         >
@@ -41,8 +48,16 @@ const CommentsSection = ({
         </Typography>
       </Box>
 
-      <Box>
-        <MyComment username={username} movieCode={movieCode} />
+      <Box
+        sx={{
+          width: isDownMd ? '80%' : '100%',
+        }}
+      >
+        <MyComment
+          username={username}
+          movieCode={movieCode}
+          isDownMd={isDownMd}
+        />
       </Box>
     </Box>
   );
