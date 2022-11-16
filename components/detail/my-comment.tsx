@@ -11,6 +11,7 @@ interface Props {
 
 const MyComment = ({ username, movieCode }: Props) => {
   const [comment, setComment] = useState<string>('');
+  const [isEdit, setIsEdit] = useState(true);
 
   const postComment = async ({
     username,
@@ -50,61 +51,123 @@ const MyComment = ({ username, movieCode }: Props) => {
       return;
     }
     await postComment({ username, movieCode, comment });
+    setIsEdit(false);
   };
 
   useEffect(() => {
     getComment({ username, movieCode }).then((res) => {
       setComment(res.data.comment);
+      console.log(res.data.comment);
+      if (res.data.comment !== undefined) {
+        setIsEdit(false);
+      }
     });
   }, [username, movieCode]);
 
   return (
     <Box mt={5}>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          sx={{
-            '& .MuiInput-root:before': {
-              borderBottomColor: 'white',
-            },
-            '& .MuiInputBase-root:hover:not(.Mui-diabled):before': {
-              borderBottomColor: 'white',
-            },
-            textarea: {
-              fontSize: '1.2rem',
-              color: 'white',
-              '&::placeholder': {
-                color: 'white',
+      {isEdit ? (
+        <form onSubmit={handleSubmit}>
+          <TextField
+            sx={{
+              '& .MuiInput-root:before': {
+                borderBottomColor: 'white',
               },
-            },
-          }}
-          fullWidth
-          multiline
-          placeholder='이 영화에 대한 감상을 남겨보세요.'
-          variant='standard'
-          size='medium'
-          value={comment}
-          onChange={(e) => {
-            if (e.target.value !== '') {
+              '& .MuiInputBase-root:hover:not(.Mui-diabled):before': {
+                borderBottomColor: 'white',
+              },
+              textarea: {
+                fontSize: '1.2rem',
+                color: 'white',
+                '&::placeholder': {
+                  color: 'white',
+                },
+              },
+            }}
+            fullWidth
+            multiline
+            placeholder='이 영화에 대한 감상을 남겨보세요.'
+            variant='standard'
+            size='medium'
+            value={comment}
+            onChange={(e) => {
+              if (e.target.value !== '') {
+                setComment(e.target.value);
+              } else {
+                setComment('');
+              }
               setComment(e.target.value);
-            } else {
-              setComment('');
-            }
-            setComment(e.target.value);
-          }}
-        />
+            }}
+          />
 
-        <Box
-          mt={2}
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-          }}
-        >
-          <Button type='submit' variant='outlined' size='large'>
-            등록
-          </Button>
+          <Box
+            mt={2}
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <Button type='submit' variant='outlined' size='large'>
+              등록
+            </Button>
+          </Box>
+        </form>
+      ) : (
+        <Box>
+          <Typography
+            sx={{
+              fontSize: '1.5rem',
+              fontWeight: 'bolder',
+              color: (theme) => theme.palette.primary.main,
+            }}
+            mb={2}
+          >
+            My Comment
+          </Typography>
+          <TextField
+            sx={{
+              '& .MuiInput-root:before': {
+                borderBottomColor: 'gray',
+              },
+              textarea: {
+                fontSize: '1.2rem',
+                color: 'lightgray',
+              },
+              pointerEvents: 'none',
+            }}
+            fullWidth
+            multiline
+            variant='standard'
+            size='medium'
+            value={comment}
+            onChange={(e) => {
+              if (e.target.value !== '') {
+                setComment(e.target.value);
+              } else {
+                setComment('');
+              }
+              setComment(e.target.value);
+            }}
+          />
+          <Box
+            mt={2}
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <Button
+              variant='outlined'
+              size='large'
+              onClick={() => {
+                setIsEdit(true);
+              }}
+            >
+              수정
+            </Button>
+          </Box>
         </Box>
-      </form>
+      )}
     </Box>
   );
 };
