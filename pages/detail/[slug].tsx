@@ -7,6 +7,7 @@ import axios from 'axios';
 import theme from '../../src/theme';
 import { useSession } from 'next-auth/react';
 import CommentsSection from '../../components/detail/comments-section';
+import Head from 'next/head';
 
 interface Detail {
   adult: boolean;
@@ -135,6 +136,9 @@ const DetailPage = (props: { data: string }) => {
         flexDirection: 'column',
       }}
     >
+      <Head>
+        <title>{movieDetail?.title}</title>
+      </Head>
       {movieDetail !== undefined ? (
         <Grid
           container

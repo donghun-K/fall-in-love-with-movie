@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import theme from '../src/theme';
+import Head from 'next/head';
 
 const AuthPage: NextPage = () => {
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
@@ -156,6 +157,9 @@ const AuthPage: NextPage = () => {
         height: '100%',
       }}
     >
+      <Head>
+        <title>Auth</title>
+      </Head>
       <form onSubmit={handleSubmit}>
         <Box
           sx={{

@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { Box, useMediaQuery } from '@mui/material';
 import MovieCard from '../../components/search/movie-card';
 import theme from '../../src/theme';
+import Head from 'next/head';
 
 interface Data {
   poster_path: string;
@@ -42,6 +43,9 @@ const SearchPage = (props: { data: string }) => {
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Box>
+      <Head>
+        <title>Search - {props.data}</title>
+      </Head>
       <Box
         sx={{
           display: 'flex',

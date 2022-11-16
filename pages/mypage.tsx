@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useSession } from 'next-auth/react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
@@ -14,6 +15,9 @@ const MyPage = () => {
   }, [status, router]);
   return (
     <Box>
+      <Head>
+        <title>My Page</title>
+      </Head>
       <Typography mt={2} variant='h3' color='primary'>
         Username : {session?.user?.name}
       </Typography>

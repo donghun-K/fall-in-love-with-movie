@@ -1,12 +1,14 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@mui/styles';
 
 export default class CustomDocument extends Document {
   render() {
     return (
       <Html>
+        <Head>
+          <link rel='icon' href='/images/favicon.ico' />
+        </Head>
         <body>
-          <Head></Head>
           <Main />
           <NextScript />
         </body>
