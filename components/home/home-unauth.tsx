@@ -42,16 +42,17 @@ const HomeUnauth = () => {
           <Typography
             sx={{
               color: 'white',
-              fontSize: isDownSm ? '1.2rem' : '1.6rem',
+              fontWeight: 'bolder',
+              fontSize: isDownSm ? '1rem' : '1.4rem',
             }}
           >
-            Movie Star Ratings
+            영화 별점 평가 서비스
           </Typography>
           <Box
             sx={{
               fontSize: isDownSm ? '1.6rem' : '2rem',
+              fontWeight: 'bolder',
               color: 'white',
-              fontWeight: '700',
             }}
           >
             <Typography sx={initialSx}>F</Typography>

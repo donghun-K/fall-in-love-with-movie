@@ -295,13 +295,14 @@ const DetailPage = (props: { data: string }) => {
                 <Typography
                   ml={isDownSm ? 0 : 2}
                   sx={{
+                    color: 'white',
+                    fontWeight: 'bolder',
                     fontSize: isDownSm ? '1rem' : '1.3rem',
                   }}
-                  color='primary'
                 >
                   {rating !== null && rating !== undefined
                     ? `${rating} / 5`
-                    : 'Rate this movie!'}
+                    : '평가하기!'}
                 </Typography>
               </Box>
             </Box>
