@@ -166,132 +166,140 @@ const AuthPage: NextPage = () => {
       <Head>
         <title>Auth</title>
       </Head>
-      <form onSubmit={handleSubmit}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-evenly',
-            alignItems: 'center',
-            height: '500px',
-            ...(isSignIn ? {} : { height: '700px' }),
-          }}
+      {status === 'authenticated' ? (
+        <Typography
+          sx={{ fontSize: '2rem', fontWeight: 'bolder', color: 'white' }}
         >
-          <Typography
-            variant='h3'
-            sx={{
-              textAlign: 'center',
-              color: 'white',
-              fontWeight: 'bold',
-            }}
-          >
-            {isSignIn ? 'Sign In' : 'Sign Up'}
-          </Typography>
-          {isSignIn ? null : (
-            <TextField
-              label='Username'
-              type='text'
-              variant='standard'
-              placeholder='Enter your username'
-              sx={inputSx}
-              onChange={(e) => {
-                setUserName(e.target.value);
-              }}
-            />
-          )}
-          <TextField
-            label='Email'
-            type='text'
-            variant='standard'
-            placeholder='example@example.com'
-            sx={inputSx}
-            onChange={(e) => {
-              setUserEmail(e.target.value);
-            }}
-          />
-          <TextField
-            label='Password'
-            type='password'
-            variant='standard'
-            placeholder='Enter 8 character or more'
-            sx={inputSx}
-            onChange={(e) => {
-              setUserPw(e.target.value);
-            }}
-          />
-          {isSignIn ? null : (
-            <TextField
-              label='Confirm password'
-              type='password'
-              variant='standard'
-              placeholder='Confirm your password'
-              sx={inputSx}
-              onChange={(e) => {
-                setUserConfirmPw(e.target.value);
-              }}
-            />
-          )}
+          잠시 후 이전 화면으로 돌아갑니다 :)
+        </Typography>
+      ) : (
+        <form onSubmit={handleSubmit}>
           <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
+              justifyContent: 'space-evenly',
               alignItems: 'center',
-              justifyContent: 'center',
-              width: '300px',
+              height: '500px',
+              ...(isSignIn ? {} : { height: '700px' }),
             }}
           >
-            <Button
-              variant='contained'
-              type='submit'
+            <Typography
+              variant='h3'
               sx={{
-                p: 1.5,
-                backgroundColor: 'primary.dark',
-                '&:hover': {
-                  backgroundColor: 'primary.light',
-                },
-                width: '130px',
+                textAlign: 'center',
+                color: 'white',
+                fontWeight: 'bold',
               }}
             >
-              <Typography
+              {isSignIn ? 'Sign In' : 'Sign Up'}
+            </Typography>
+            {isSignIn ? null : (
+              <TextField
+                label='Username'
+                type='text'
+                variant='standard'
+                placeholder='Enter your username'
+                sx={inputSx}
+                onChange={(e) => {
+                  setUserName(e.target.value);
+                }}
+              />
+            )}
+            <TextField
+              label='Email'
+              type='text'
+              variant='standard'
+              placeholder='example@example.com'
+              sx={inputSx}
+              onChange={(e) => {
+                setUserEmail(e.target.value);
+              }}
+            />
+            <TextField
+              label='Password'
+              type='password'
+              variant='standard'
+              placeholder='Enter 8 character or more'
+              sx={inputSx}
+              onChange={(e) => {
+                setUserPw(e.target.value);
+              }}
+            />
+            {isSignIn ? null : (
+              <TextField
+                label='Confirm password'
+                type='password'
+                variant='standard'
+                placeholder='Confirm your password'
+                sx={inputSx}
+                onChange={(e) => {
+                  setUserConfirmPw(e.target.value);
+                }}
+              />
+            )}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '300px',
+              }}
+            >
+              <Button
+                variant='contained'
+                type='submit'
                 sx={{
-                  color: 'white',
-                  mr: 1,
-                  fontWeight: 'bold',
+                  p: 1.5,
+                  backgroundColor: 'primary.dark',
+                  '&:hover': {
+                    backgroundColor: 'primary.light',
+                  },
+                  width: '130px',
                 }}
               >
-                {isSignIn ? 'Sign In' : 'Sign Up'}
-              </Typography>
-              {isSignIn ? (
-                <LoginIcon
+                <Typography
                   sx={{
                     color: 'white',
+                    mr: 1,
+                    fontWeight: 'bold',
                   }}
-                />
-              ) : (
-                <HowToRegIcon
-                  sx={{
-                    color: 'white',
-                  }}
-                />
-              )}
-            </Button>
-            <Link
-              href='#'
-              mt={1}
-              underline='hover'
-              sx={{
-                color: 'gray',
-                '&:hover': {
-                  color: 'lightgray',
-                },
-              }}
-              onClick={() => setIsSignIn(!isSignIn)}
-            >
-              {isSignIn ? '계정이 없으신가요?' : '이미 계정이 있으신가요?'}
-            </Link>
+                >
+                  {isSignIn ? 'Sign In' : 'Sign Up'}
+                </Typography>
+                {isSignIn ? (
+                  <LoginIcon
+                    sx={{
+                      color: 'white',
+                    }}
+                  />
+                ) : (
+                  <HowToRegIcon
+                    sx={{
+                      color: 'white',
+                    }}
+                  />
+                )}
+              </Button>
+              <Link
+                href='#'
+                mt={1}
+                underline='hover'
+                sx={{
+                  color: 'gray',
+                  '&:hover': {
+                    color: 'lightgray',
+                  },
+                }}
+                onClick={() => setIsSignIn(!isSignIn)}
+              >
+                {isSignIn ? '계정이 없으신가요?' : '이미 계정이 있으신가요?'}
+              </Link>
+            </Box>
           </Box>
-        </Box>
-      </form>
+        </form>
+      )}
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={3000}
