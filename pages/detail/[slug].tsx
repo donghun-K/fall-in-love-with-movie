@@ -65,44 +65,6 @@ declare module 'axios' {
   }
 }
 
-const getMovieDetail = async (movieId: string) => {
-  const response = await axios.post('/api/detail', {
-    movieId: movieId,
-  });
-  const data = response.data.data;
-  return data;
-};
-
-const postRating = async ({
-  username,
-  movieCode,
-  rating,
-}: {
-  username: string | undefined | null;
-  movieCode: string;
-  rating: number | null;
-}) => {
-  const response = await axios.post('/api/rating', {
-    username,
-    movieCode,
-    rating,
-  });
-};
-
-const getRating = async ({
-  username,
-  movieCode,
-}: {
-  username: string | undefined | null;
-  movieCode: string;
-}) => {
-  const response = await axios.get('/api/rating', {
-    params: { username, movieCode },
-  });
-
-  return response;
-};
-
 const DetailPage = (props: { data: string }) => {
   const isDownMd = useMediaQuery(theme.breakpoints.down('md'));
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
@@ -111,6 +73,44 @@ const DetailPage = (props: { data: string }) => {
 
   const [movieDetail, setMovieDetail] = useState<Detail>();
   const [rating, setRating] = useState<number | null>(null);
+
+  const getMovieDetail = async (movieId: string) => {
+    const response = await axios.post('/api/detail/detail', {
+      movieId: movieId,
+    });
+    const data = response.data.data;
+    return data;
+  };
+
+  const postRating = async ({
+    username,
+    movieCode,
+    rating,
+  }: {
+    username: string | undefined | null;
+    movieCode: string;
+    rating: number | null;
+  }) => {
+    const response = await axios.post('/api/detail/rating', {
+      username,
+      movieCode,
+      rating,
+    });
+  };
+
+  const getRating = async ({
+    username,
+    movieCode,
+  }: {
+    username: string | undefined | null;
+    movieCode: string;
+  }) => {
+    const response = await axios.get('/api/detail/rating', {
+      params: { username, movieCode },
+    });
+
+    return response;
+  };
 
   useEffect(() => {
     getMovieDetail(props.data).then((res) => {

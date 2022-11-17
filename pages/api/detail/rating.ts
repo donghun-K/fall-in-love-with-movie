@@ -1,4 +1,4 @@
-import { connectToDatabase } from '../../lib/db';
+import { connectToDatabase } from '../../../lib/db';
 
 async function handler(req: any, res: any) {
   if (req.method === 'POST') {
@@ -9,7 +9,7 @@ async function handler(req: any, res: any) {
     const client = await connectToDatabase();
     const db = client.db('film');
 
-    const response = await db.collection('ratings').updateOne(
+    const response = await db.collection('posts').updateOne(
       { username: username, movieCode: movieCode },
       {
         $set: {
@@ -27,7 +27,7 @@ async function handler(req: any, res: any) {
     const { username, movieCode } = req.query;
     const client = await connectToDatabase();
     const db = client.db('film');
-    const response = await db.collection('ratings').findOne({
+    const response = await db.collection('posts').findOne({
       username,
       movieCode,
     });
