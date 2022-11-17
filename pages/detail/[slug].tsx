@@ -274,7 +274,7 @@ const DetailPage = (props: { data: string }) => {
                   value={rating}
                   onChange={(e, value) => {
                     if (status === 'unauthenticated') {
-                      alert('Sign In First!');
+                      alert('로그인 먼저 해주세요!');
                       return;
                     }
                     if (rating === value) {

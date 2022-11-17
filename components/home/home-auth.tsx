@@ -1,7 +1,7 @@
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Box, useMediaQuery } from '@mui/material';
+import { Backdrop, Box, CircularProgress, useMediaQuery } from '@mui/material';
 import MovieCard from '../../components/search/movie-card';
 import theme from '../../src/theme';
 
@@ -30,6 +30,7 @@ const getMovieData = async () => {
 
 const HomeAuth = () => {
   const [movieData, setMovieData] = useState<Data[]>();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getMovieData().then((res) => {
@@ -63,10 +64,20 @@ const HomeAuth = () => {
             release={item.release_date}
             poster={`https://image.tmdb.org/t/p/original/${item.poster_path}`}
             id={item.id}
+            setIsLoading={setIsLoading}
             key={item.id}
           />
         ))}
       </Box>
+      <Backdrop
+        sx={{
+          color: (theme) => theme.palette.primary.main,
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+        open={isLoading}
+      >
+        <CircularProgress size={80} color='inherit' />
+      </Backdrop>
     </Box>
   );
 };
