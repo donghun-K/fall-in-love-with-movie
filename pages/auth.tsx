@@ -303,10 +303,13 @@ const AuthPage: NextPage = () => {
         </MuiAlert>
       </Snackbar>
       <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{
+          color: (theme) => theme.palette.primary.main,
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
         open={isLoading}
       >
-        <CircularProgress color='inherit' />
+        <CircularProgress size={80} color='inherit' />
       </Backdrop>
     </Box>
   );

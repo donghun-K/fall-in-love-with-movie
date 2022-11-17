@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Box, useMediaQuery } from '@mui/material';
+import { Backdrop, Box, CircularProgress, useMediaQuery } from '@mui/material';
 import MovieCard from '../../components/search/movie-card';
 import theme from '../../src/theme';
 import Head from 'next/head';
@@ -24,24 +24,24 @@ interface Data {
   vote_average: number;
 }
 
-const getMovieData = async (query: string) => {
-  const response = await axios.post('/api/search', {
-    query: query,
-  });
-  const data = response.data.data;
-  return data;
-};
-
 const SearchPage = (props: { data: string }) => {
   const [movieData, setMovieData] = useState<Data[]>();
+  const [isLoading, setIsLoading] = useState(false);
 
+  const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const getMovieData = async (query: string) => {
+    const response = await axios.post('/api/search', {
+      query: query,
+    });
+    const data = response.data.data;
+    return data;
+  };
   useEffect(() => {
     getMovieData(props.data).then((res) => {
       setMovieData(res.results);
     });
   }, [props]);
-  const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
-
   return (
     <Box>
       <Head>
@@ -90,10 +90,20 @@ const SearchPage = (props: { data: string }) => {
             release={item.release_date}
             poster={`https://image.tmdb.org/t/p/original/${item.poster_path}`}
             id={item.id}
+            setIsLoading={setIsLoading}
             key={item.id}
           />
         ))}
       </Box>
+      <Backdrop
+        sx={{
+          color: (theme) => theme.palette.primary.main,
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+        open={isLoading}
+      >
+        <CircularProgress size={80} color='inherit' />
+      </Backdrop>
     </Box>
   );
 };

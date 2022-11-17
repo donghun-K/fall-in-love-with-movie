@@ -1,6 +1,7 @@
 import { Box, Typography, Tooltip, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import theme from '../../src/theme';
 
 const MovieCard = ({
@@ -8,13 +9,17 @@ const MovieCard = ({
   release,
   poster,
   id,
+  setIsLoading,
 }: {
   title: string;
   release: string;
   poster: string;
   id: number;
+  setIsLoading: Function;
 }) => {
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const router = useRouter();
   return (
     <Box
       sx={{
@@ -61,7 +66,13 @@ const MovieCard = ({
           color: 'white',
         }}
       >
-        <Link href={`/detail/${id}`}>
+        <Typography
+          onClick={async () => {
+            setIsLoading(true);
+            await router.replace(`/detail/${id}`);
+            setIsLoading(false);
+          }}
+        >
           <Tooltip title={title}>
             <Typography
               sx={{
@@ -76,7 +87,7 @@ const MovieCard = ({
               {title}
             </Typography>
           </Tooltip>
-        </Link>
+        </Typography>
         <Typography
           sx={{
             fontSize: '.7rem',

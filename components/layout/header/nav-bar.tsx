@@ -1,6 +1,8 @@
 import {
   AppBar,
+  Backdrop,
   Button,
+  CircularProgress,
   Drawer,
   Grid,
   List,
@@ -34,6 +36,7 @@ const NavBar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [searchInput, setSearchInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const isUpLg = useMediaQuery(theme.breakpoints.up('lg'));
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
@@ -57,7 +60,9 @@ const NavBar = () => {
       return;
     }
     setDialogOpen(false);
-    router.replace(`/search/${searchInput}`);
+    setIsLoading(true);
+    await router.replace(`/search/${searchInput}`);
+    setIsLoading(false);
   };
 
   return (
@@ -256,6 +261,15 @@ const NavBar = () => {
         setDialogOpen={setDialogOpen}
         handleSubmit={handleSubmit}
       />
+      <Backdrop
+        sx={{
+          color: (theme) => theme.palette.primary.main,
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+        open={isLoading}
+      >
+        <CircularProgress size={80} color='inherit' />
+      </Backdrop>
     </AppBar>
   );
 };
