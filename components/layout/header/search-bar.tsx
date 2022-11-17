@@ -1,13 +1,15 @@
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { IconButton, InputBase, Paper } from '@mui/material';
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 
-const SearchBar = () => {
+interface Props {
+  searchInput: string;
+  setSearchInput: Function;
+  handleSubmit: Function;
+}
+
+const SearchBar = ({ searchInput, setSearchInput, handleSubmit }: Props) => {
   const [textFieldFocused, setTextFieldFocused] = useState(false);
-  const [searchInput, setSearchInput] = useState('');
-
-  const router = useRouter();
 
   const focusedPaperSx = textFieldFocused
     ? {
@@ -32,24 +34,19 @@ const SearchBar = () => {
     ...focusedPaperSx,
   };
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
-    if (searchInput === '') {
-      return;
-    }
-    router.replace(`/search/${searchInput}`);
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={(e) => {
+        handleSubmit(e);
+      }}
+    >
       <Paper sx={paperSx}>
         <InputBase
           sx={{
             ml: 1,
             color: 'primary.light',
           }}
+          value={searchInput}
           onFocus={() => setTextFieldFocused(true)}
           onBlur={() => setTextFieldFocused(false)}
           onChange={(e) => {

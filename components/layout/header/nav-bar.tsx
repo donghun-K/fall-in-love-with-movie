@@ -1,9 +1,6 @@
 import {
   AppBar,
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
   Drawer,
   Grid,
   List,
@@ -11,7 +8,6 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  TextField,
   Toolbar,
   Typography,
   useMediaQuery,
@@ -30,6 +26,7 @@ import { useSession } from 'next-auth/react';
 import { signOut } from 'next-auth/react';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import SearchDialog from './search-dialog';
 
 const NavBar = () => {
   const { data: session, status } = useSession();
@@ -51,17 +48,15 @@ const NavBar = () => {
     },
   };
 
-  const handleDialogClose = () => {
-    setDialogOpen(false);
-  };
-
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
     if (searchInput === '') {
+      alert('검색어를 입력해주세요!');
       return;
     }
+    setDialogOpen(false);
     router.replace(`/search/${searchInput}`);
   };
 
@@ -113,7 +108,11 @@ const NavBar = () => {
                 </Button>
               ) : (
                 <>
-                  <SearchBar />
+                  <SearchBar
+                    searchInput={searchInput}
+                    setSearchInput={setSearchInput}
+                    handleSubmit={handleSubmit}
+                  />
                   {status === 'authenticated' ? (
                     <>
                       <Link href={'/mypage'}>
@@ -250,54 +249,13 @@ const NavBar = () => {
           </ListItem>
         </List>
       </Drawer>
-      <Dialog
-        open={dialogOpen}
-        onClose={handleDialogClose}
-        sx={{
-          '& .MuiDialog-paper': {
-            backgroundColor: '#111111',
-          },
-        }}
-      >
-        <form onSubmit={handleSubmit}>
-          <DialogContent>
-            <TextField
-              autoFocus
-              margin='dense'
-              label='Enter movie title'
-              type='text'
-              fullWidth
-              variant='standard'
-              onChange={(e) => {
-                setSearchInput(e.target.value);
-              }}
-              sx={{
-                '& label': {
-                  color: 'gray',
-                },
-                '& label.Mui-focused': {
-                  color: 'primary.main',
-                },
-                '& .MuiInput-root:before': {
-                  borderBottomColor: 'lightgray',
-                },
-                '& .MuiInputBase-root:hover:not(.Mui-diabled):before': {
-                  borderBottomColor: 'gray',
-                },
-                input: {
-                  color: 'white',
-                },
-              }}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button type='submit' onClick={handleDialogClose}>
-              Search
-            </Button>
-            <Button onClick={handleDialogClose}>Cancel</Button>
-          </DialogActions>
-        </form>
-      </Dialog>
+      <SearchDialog
+        dialogOpen={dialogOpen}
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+        setDialogOpen={setDialogOpen}
+        handleSubmit={handleSubmit}
+      />
     </AppBar>
   );
 };
