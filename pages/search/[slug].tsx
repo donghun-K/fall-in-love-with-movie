@@ -41,6 +41,7 @@ const SearchPage = (props: { data: string }) => {
     });
   }, [props]);
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Box>
       <Head>

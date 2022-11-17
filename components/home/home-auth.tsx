@@ -1,5 +1,4 @@
 import Typography from '@mui/material/Typography';
-import { GetStaticPaths, GetStaticProps } from 'next/types';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Box, useMediaQuery } from '@mui/material';

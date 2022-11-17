@@ -6,6 +6,8 @@ import {
   Typography,
   Snackbar,
   useMediaQuery,
+  Backdrop,
+  CircularProgress,
 } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import LoginIcon from '@mui/icons-material/Login';
@@ -27,6 +29,7 @@ const AuthPage: NextPage = () => {
   const [userConfirmPw, setUserConfirmPw] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMsg, setSnackbarMsg] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const { status } = useSession();
@@ -61,6 +64,7 @@ const AuthPage: NextPage = () => {
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
+
     let regex = new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,3}');
 
     if (isSignIn) {
@@ -74,11 +78,13 @@ const AuthPage: NextPage = () => {
         setSnackbarOpen(true);
         return;
       }
+      setIsLoading(true);
       const result = await signIn('credentials', {
         redirect: false,
         email: userEmail,
         password: userPw,
       });
+      setIsLoading(false);
       if (result === undefined) {
         return;
       }
@@ -115,9 +121,9 @@ const AuthPage: NextPage = () => {
         setSnackbarOpen(true);
         return;
       }
-
+      setIsLoading(true);
       const result = await createUser(userName, userEmail, userPw);
-
+      setIsLoading(false);
       if (result) {
         alert('회원가입에 성공하였습니다!');
         setIsSignIn(true);
@@ -296,6 +302,12 @@ const AuthPage: NextPage = () => {
           {snackbarMsg}
         </MuiAlert>
       </Snackbar>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress color='inherit' />
+      </Backdrop>
     </Box>
   );
 };
