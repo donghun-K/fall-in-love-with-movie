@@ -20,7 +20,7 @@ async function handler(req: any, res: any) {
         upsert: true,
       }
     );
-
+    client.close();
     res.status(201).json({ message: 'Update Comment' });
   }
   if (req.method === 'GET') {
@@ -31,6 +31,7 @@ async function handler(req: any, res: any) {
       username,
       movieCode,
     });
+    client.close();
     res.status(201).json({ comment: response?.comment });
   }
 }
