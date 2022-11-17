@@ -61,7 +61,7 @@ const NavBar = () => {
     }
     setDialogOpen(false);
     setIsLoading(true);
-    await router.replace(`/search/${searchInput}`);
+    await router.push(`/search/${searchInput}`);
     setIsLoading(false);
   };
 

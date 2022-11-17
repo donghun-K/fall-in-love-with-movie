@@ -69,7 +69,7 @@ const MovieCard = ({
         <Typography
           onClick={async () => {
             setIsLoading(true);
-            await router.replace(`/detail/${id}`);
+            await router.push(`/detail/${id}`);
             setIsLoading(false);
           }}
         >
