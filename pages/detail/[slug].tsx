@@ -129,6 +129,10 @@ const DetailPage = (props: { data: string }) => {
     );
   }, [status, session, props]);
 
+  if (movieDetail === undefined) {
+    return <></>;
+  }
+
   return (
     <Box
       sx={{
@@ -162,12 +166,21 @@ const DetailPage = (props: { data: string }) => {
               mb: '1rem',
             }}
           >
-            <Image
-              src={`https://image.tmdb.org/t/p/original/${movieDetail.poster_path}`}
-              width={isDownMd ? 324 : 288}
-              height={isDownMd ? 450 : 400}
-              alt={movieDetail.title}
-            />
+            <Box
+              sx={{
+                width: isDownMd ? '324px' : '288px',
+                height: isDownMd ? '450px' : '400px',
+                backgroundColor: 'white',
+                boxShadow: '0 0 .3rem .3rem white',
+              }}
+            >
+              <Image
+                src={`https://image.tmdb.org/t/p/original/${movieDetail.poster_path}`}
+                width={isDownMd ? 324 : 288}
+                height={isDownMd ? 450 : 400}
+                alt={movieDetail.title}
+              />
+            </Box>
           </Grid>
           <Grid item xs={10} sm={8} md={6} lg={7}>
             <Box
