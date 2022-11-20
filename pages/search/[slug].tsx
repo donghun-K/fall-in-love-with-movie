@@ -73,7 +73,7 @@ const SearchPage = (props: { data: string }) => {
             fontSize: isDownSm ? '1.5rem' : '2rem',
           }}
         >
-          검색 결과
+          검색 결과{movieData?.length === 0 ? '가 없습니다 :(' : null}
         </Typography>
       </Box>
 
