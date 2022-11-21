@@ -43,7 +43,14 @@ const SearchPage = (props: { data: string }) => {
     });
   }, [props]);
   return (
-    <Box>
+    <Box
+      sx={{
+        minHeight: '80%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+      }}
+    >
       <Head>
         <title>Search - {props.data}</title>
       </Head>
@@ -51,15 +58,18 @@ const SearchPage = (props: { data: string }) => {
         sx={{
           display: 'flex',
           flexDirection: 'row',
-          alignItems: 'flex-end',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
-        ml={isDownSm ? 3 : 5}
-        mt={isDownSm ? 0 : 3}
+        mt={isDownSm ? 2 : 4}
+        mb={isDownSm ? 0 : 2}
       >
         <Typography
           sx={{
             color: (theme) => theme.palette.primary.main,
-            fontSize: isDownSm ? '2rem' : '2.5rem',
+            lineHeight: isDownSm ? '1.5rem' : '2rem',
+            fontSize: isDownSm ? '1.5rem' : '2rem',
             fontWeight: 'bolder',
           }}
           mr={1}
@@ -70,7 +80,8 @@ const SearchPage = (props: { data: string }) => {
           sx={{
             color: 'white',
             fontWeight: 'bolder',
-            fontSize: isDownSm ? '1.5rem' : '2rem',
+            lineHeight: isDownSm ? '1rem' : '1.2rem',
+            fontSize: isDownSm ? '1rem' : '1.2rem',
           }}
         >
           검색 결과{movieData?.length === 0 ? '가 없습니다 :(' : null}
