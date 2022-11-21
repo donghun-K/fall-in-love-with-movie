@@ -31,6 +31,7 @@ async function handler(req: any, res: any) {
       username,
       movieCode,
     });
+    client.close();
     res.status(201).json({ rating: response?.rating });
   }
 }
