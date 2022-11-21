@@ -283,7 +283,7 @@ const DetailPage = (props: { data: string }) => {
                       color: (theme) => theme.palette.primary.main,
                     },
                   }}
-                  value={rating}
+                  value={rating === undefined ? null : rating}
                   onChange={(e, value) => {
                     if (status === 'unauthenticated') {
                       alert('로그인 먼저 해주세요!');
