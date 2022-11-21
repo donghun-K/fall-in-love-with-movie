@@ -78,7 +78,7 @@ const MyComment = ({ username, movieCode, isDownMd, isDownSm }: Props) => {
   }, [username, movieCode]);
 
   return (
-    <Box mt={isDownMd ? 2 : 5}>
+    <Box>
       {isEdit ? (
         <Box
           sx={{
