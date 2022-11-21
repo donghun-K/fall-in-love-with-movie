@@ -52,7 +52,6 @@ const MovieCard = ({
       }}
     >
       <Image src={poster} alt={title} width={200} height={287} />
-
       <Box
         sx={{
           display: 'flex',
@@ -75,6 +74,7 @@ const MovieCard = ({
         >
           <Tooltip title={title}>
             <Typography
+              component='span'
               sx={{
                 fontSize: '.9rem',
                 '&:hover': {
