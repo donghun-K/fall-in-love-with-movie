@@ -11,6 +11,7 @@ interface Props {
 
 const MyComment = ({ username, movieCode, isDownMd }: Props) => {
   const [comment, setComment] = useState<string>('');
+  const [date, setDate] = useState<string>('');
   const [isEdit, setIsEdit] = useState(true);
 
   const postComment = async ({
@@ -22,7 +23,7 @@ const MyComment = ({ username, movieCode, isDownMd }: Props) => {
     movieCode: string;
     comment: string;
   }) => {
-    const response = await axios.post('/api/detail/comment', {
+    const response = await axios.post('/api/detail/mycomment', {
       username,
       movieCode,
       comment,
@@ -36,7 +37,7 @@ const MyComment = ({ username, movieCode, isDownMd }: Props) => {
     username: string;
     movieCode: string;
   }) => {
-    const response = await axios.get('/api/detail/comment', {
+    const response = await axios.get('/api/detail/mycomment', {
       params: { username, movieCode },
     });
     return response;
@@ -57,10 +58,10 @@ const MyComment = ({ username, movieCode, isDownMd }: Props) => {
   useEffect(() => {
     getComment({ username, movieCode }).then((res) => {
       setComment(res.data.comment);
-      console.log(res.data.comment);
       if (res.data.comment !== undefined) {
         setIsEdit(false);
       }
+      setDate(res.data.date);
     });
   }, [username, movieCode]);
 
@@ -82,6 +83,7 @@ const MyComment = ({ username, movieCode, isDownMd }: Props) => {
                 '&::placeholder': {
                   color: 'white',
                 },
+                padding: '.5rem 0',
               },
             }}
             fullWidth
@@ -120,35 +122,65 @@ const MyComment = ({ username, movieCode, isDownMd }: Props) => {
               fontWeight: 'bolder',
               color: (theme) => theme.palette.primary.main,
             }}
-            mb={2}
           >
             My Comment
           </Typography>
-          <TextField
+          <Typography
             sx={{
-              '& .MuiInput-root:before': {
-                borderBottomColor: 'gray',
-              },
-              textarea: {
-                fontSize: isDownMd ? '1rem' : '1.2rem',
-                color: 'lightgray',
-              },
-              pointerEvents: 'none',
+              fontSize: isDownMd ? '.6rem' : '.8rem',
+              color: 'gray',
             }}
-            fullWidth
-            multiline
-            variant='standard'
-            size='medium'
-            value={comment}
-            onChange={(e) => {
-              if (e.target.value !== '') {
+            mb={2}
+          >
+            {date}
+          </Typography>
+          <Box
+            sx={{
+              maxHeight: '100px',
+              overflow: 'auto',
+              '&::-webkit-scrollbar': {
+                width: '10px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: 'lightgray',
+                backgroundClip: 'padding-box',
+                border: '2px solid transparent',
+                borderRadius: '10px',
+              },
+              '&::-webkit-scrollbar-track': {
+                backgroundColor: 'black',
+                borderRadius: '10px',
+                boxShadow: 'inset 0 0 5px white',
+              },
+            }}
+          >
+            <TextField
+              sx={{
+                '& .MuiInput-root:before': {
+                  borderBottomColor: 'transparent',
+                },
+                textarea: {
+                  fontSize: isDownMd ? '1rem' : '1.2rem',
+                  color: 'lightgray',
+                  padding: '.5rem 0',
+                },
+                pointerEvents: 'none',
+              }}
+              fullWidth
+              multiline
+              variant='standard'
+              size='medium'
+              value={comment}
+              onChange={(e) => {
+                if (e.target.value !== '') {
+                  setComment(e.target.value);
+                } else {
+                  setComment('');
+                }
                 setComment(e.target.value);
-              } else {
-                setComment('');
-              }
-              setComment(e.target.value);
-            }}
-          />
+              }}
+            />
+          </Box>
           <Box
             mt={2}
             sx={{

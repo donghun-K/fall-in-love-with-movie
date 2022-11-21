@@ -9,11 +9,14 @@ async function handler(req: any, res: any) {
     const client = await connectToDatabase();
     const db = client.db('film');
 
+    const date = new Date().toLocaleString();
+
     const response = await db.collection('posts').updateOne(
       { username: username, movieCode: movieCode },
       {
         $set: {
           comment: comment,
+          date: date,
         },
       },
       {
@@ -32,7 +35,7 @@ async function handler(req: any, res: any) {
       movieCode,
     });
     client.close();
-    res.status(201).json({ comment: response?.comment });
+    res.status(201).json({ comment: response?.comment, date: response?.date });
   }
 }
 
