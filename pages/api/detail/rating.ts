@@ -21,6 +21,22 @@ async function handler(req: any, res: any) {
       }
     );
 
+    if (rating === null) {
+      const check = await db
+        .collection('posts')
+        .findOne({ username: username, movieCode: movieCode });
+
+      if (
+        (check?.rating === undefined || check?.rating === null) &&
+        (check?.comment === undefined || check?.comment === null)
+      ) {
+        const del = await db
+          .collection('posts')
+          .deleteOne({ username: username, movieCode: movieCode });
+      }
+    }
+
+    client.close();
     res.status(201).json({ message: 'Update Rating' });
   }
   if (req.method === 'GET') {

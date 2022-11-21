@@ -42,6 +42,18 @@ const MyComment = ({ username, movieCode, isDownMd, isDownSm }: Props) => {
     });
     return response;
   };
+  const deleteComment = async ({
+    username,
+    movieCode,
+  }: {
+    username: string;
+    movieCode: string;
+  }) => {
+    const response = await axios.delete('/api/detail/mycomment', {
+      params: { username, movieCode },
+    });
+    return response;
+  };
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
     e: React.FormEvent<HTMLFormElement>
@@ -208,6 +220,20 @@ const MyComment = ({ username, movieCode, isDownMd, isDownSm }: Props) => {
               }}
             >
               수정
+            </Button>
+            <Button
+              sx={{
+                marginLeft: '1rem',
+              }}
+              variant='outlined'
+              size={isDownMd ? 'medium' : 'large'}
+              onClick={() => {
+                deleteComment({ username, movieCode });
+                setComment('');
+                setIsEdit(true);
+              }}
+            >
+              삭제
             </Button>
           </Box>
         </Box>
