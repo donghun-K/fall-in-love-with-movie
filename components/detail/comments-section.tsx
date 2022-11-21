@@ -40,7 +40,7 @@ const CommentsSection = ({
     const response = await axios.get('/api/detail/comments', {
       params: { movieCode, username },
     });
-    console.log(response.data);
+    // console.log(response.data);
     return response;
   };
 
@@ -53,6 +53,7 @@ const CommentsSection = ({
   return (
     <Box
       mt={isDownMd ? (isDownSm ? 5 : 8) : 15}
+      mb={5}
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -64,6 +65,7 @@ const CommentsSection = ({
           display: 'flex',
           alignItems: 'center',
         }}
+        ml={isDownMd ? 0 : 2}
       >
         <ChatBubbleIcon
           sx={{
@@ -97,6 +99,7 @@ const CommentsSection = ({
         ) : (
           <Typography
             mt={2}
+            ml={isDownMd ? 0 : 1}
             sx={{
               fontWeight: 'bolder',
               fontSize: isDownMd ? '1.2rem' : '1.5rem',

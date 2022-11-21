@@ -9,7 +9,7 @@ interface Props {
   movieCode: string;
 }
 
-const MyComment = ({ username, movieCode, isDownMd }: Props) => {
+const MyComment = ({ username, movieCode, isDownMd, isDownSm }: Props) => {
   const [comment, setComment] = useState<string>('');
   const [date, setDate] = useState<string>('');
   const [isEdit, setIsEdit] = useState(true);
@@ -68,54 +68,67 @@ const MyComment = ({ username, movieCode, isDownMd }: Props) => {
   return (
     <Box mt={isDownMd ? 2 : 5}>
       {isEdit ? (
-        <form onSubmit={handleSubmit}>
-          <TextField
-            sx={{
-              '& .MuiInput-root:before': {
-                borderBottomColor: 'white',
-              },
-              '& .MuiInputBase-root:hover:not(.Mui-diabled):before': {
-                borderBottomColor: 'white',
-              },
-              textarea: {
-                fontSize: isDownMd ? '1rem' : '1.2rem',
-                color: 'white',
-                '&::placeholder': {
-                  color: 'white',
+        <Box
+          sx={{
+            padding: '1rem',
+          }}
+        >
+          <form onSubmit={handleSubmit}>
+            <TextField
+              sx={{
+                '& .MuiInput-root:before': {
+                  borderBottomColor: 'white',
                 },
-                padding: '.5rem 0',
-              },
-            }}
-            fullWidth
-            multiline
-            placeholder='이 영화에 대한 감상을 남겨보세요.'
-            variant='standard'
-            size='medium'
-            value={comment}
-            onChange={(e) => {
-              if (e.target.value !== '') {
+                '& .MuiInputBase-root:hover:not(.Mui-diabled):before': {
+                  borderBottomColor: 'white',
+                },
+                textarea: {
+                  fontSize: isDownMd ? '1rem' : '1.2rem',
+                  color: 'white',
+                  '&::placeholder': {
+                    color: 'white',
+                  },
+                  padding: '.5rem 0',
+                },
+              }}
+              fullWidth
+              multiline
+              placeholder='이 영화에 대한 감상을 남겨보세요.'
+              variant='standard'
+              size='medium'
+              value={comment}
+              onChange={(e) => {
+                if (e.target.value !== '') {
+                  setComment(e.target.value);
+                } else {
+                  setComment('');
+                }
                 setComment(e.target.value);
-              } else {
-                setComment('');
-              }
-              setComment(e.target.value);
-            }}
-          />
+              }}
+            />
 
-          <Box
-            mt={2}
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <Button type='submit' variant='outlined' size='large'>
-              등록
-            </Button>
-          </Box>
-        </form>
+            <Box
+              mt={2}
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <Button type='submit' variant='outlined' size='large'>
+                등록
+              </Button>
+            </Box>
+          </form>
+        </Box>
       ) : (
-        <Box>
+        <Box
+          sx={{
+            backgroundColor: '#222222',
+            padding: '1rem',
+            borderRadius: '.8rem',
+            margin: isDownSm ? '1rem 0' : '2rem 0',
+          }}
+        >
           <Typography
             sx={{
               fontSize: isDownMd ? '1.2rem' : '1.5rem',
@@ -148,7 +161,7 @@ const MyComment = ({ username, movieCode, isDownMd }: Props) => {
                 borderRadius: '10px',
               },
               '&::-webkit-scrollbar-track': {
-                backgroundColor: '#111111',
+                backgroundColor: '#333333',
                 borderRadius: '10px',
               },
             }}
