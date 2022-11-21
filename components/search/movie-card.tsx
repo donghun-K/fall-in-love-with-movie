@@ -65,29 +65,25 @@ const MovieCard = ({
           color: 'white',
         }}
       >
-        <Typography
-          onClick={async () => {
-            setIsLoading(true);
-            await router.push(`/detail/${id}`);
-            setIsLoading(false);
-          }}
-        >
-          <Tooltip title={title}>
-            <Typography
-              component='span'
-              sx={{
-                fontSize: '.9rem',
-                '&:hover': {
-                  cursor: 'pointer',
-                  textDecoration: 'underline',
-                },
-              }}
-              noWrap={true}
-            >
-              {title}
-            </Typography>
-          </Tooltip>
-        </Typography>
+        <Tooltip title={title}>
+          <Typography
+            onClick={async () => {
+              setIsLoading(true);
+              await router.push(`/detail/${id}`);
+              setIsLoading(false);
+            }}
+            sx={{
+              fontSize: '.9rem',
+              '&:hover': {
+                cursor: 'pointer',
+                textDecoration: 'underline',
+              },
+            }}
+            noWrap={true}
+          >
+            {title}
+          </Typography>
+        </Tooltip>
         <Typography
           sx={{
             fontSize: '.7rem',
