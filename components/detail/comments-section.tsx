@@ -2,12 +2,23 @@ import { Box, Typography } from '@mui/material';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import MyComment from './my-comment';
 import { useSession } from 'next-auth/react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Comment from './comment';
 
 interface Props {
   isDownSm?: boolean;
   isDownMd?: boolean;
   username: string;
   movieCode: string;
+}
+
+interface CommentData {
+  movieCode: string;
+  username: string;
+  comment: string;
+  rating?: number;
+  date: string;
 }
 
 const CommentsSection = ({
@@ -17,6 +28,28 @@ const CommentsSection = ({
   isDownSm,
 }: Props) => {
   const { status } = useSession();
+  const [commentDatas, setCommentDatas] = useState<CommentData[]>();
+
+  const getComments = async ({
+    movieCode,
+    username,
+  }: {
+    movieCode: string;
+    username: string;
+  }) => {
+    const response = await axios.get('/api/detail/comments', {
+      params: { movieCode, username },
+    });
+    console.log(response.data);
+    return response;
+  };
+
+  useEffect(() => {
+    getComments({ movieCode, username }).then((res) => {
+      setCommentDatas(res.data.datas);
+    });
+  }, [movieCode, username]);
+
   return (
     <Box
       mt={isDownMd ? (isDownSm ? 5 : 8) : 15}
@@ -74,6 +107,17 @@ const CommentsSection = ({
             로그인하고 코멘트를 남겨보세요!
           </Typography>
         )}
+        {commentDatas?.map((commentData, i) => (
+          <Comment
+            username={commentData.username}
+            rating={commentData.rating}
+            comment={commentData.comment}
+            date={commentData.date}
+            isDownMd={isDownMd}
+            isDownSm={isDownSm}
+            key={i}
+          />
+        ))}
       </Box>
     </Box>
   );
