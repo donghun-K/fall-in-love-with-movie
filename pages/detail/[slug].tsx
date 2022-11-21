@@ -249,9 +249,8 @@ const DetailPage = (props: { data: string }) => {
                     borderRadius: '10px',
                   },
                   '&::-webkit-scrollbar-track': {
-                    backgroundColor: 'black',
+                    backgroundColor: '#111111',
                     borderRadius: '10px',
-                    boxShadow: 'inset 0 0 5px white',
                   },
                 }}
               >
