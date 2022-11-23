@@ -46,7 +46,7 @@ async function handler(req: any, res: any) {
       password: hashedPassword,
     });
 
-    res.status(201).json({ message: 'Created user!' });
+    res.status(201).json({ message: '회원가입 성공!' });
     client.close();
   }
 }
