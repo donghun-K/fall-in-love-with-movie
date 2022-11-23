@@ -58,9 +58,7 @@ const SearchPage = (props: { data: string }) => {
         sx={{
           display: 'flex',
           flexDirection: 'row',
-          flexWrap: 'wrap',
           justifyContent: 'center',
-          alignItems: 'center',
         }}
         mt={isDownSm ? 2 : 4}
         mb={isDownSm ? 0 : 2}
@@ -72,19 +70,20 @@ const SearchPage = (props: { data: string }) => {
             fontSize: isDownSm ? '1.5rem' : '2rem',
             fontWeight: 'bolder',
           }}
-          mr={1}
         >
           &apos;{props.data}&apos;
-        </Typography>
-        <Typography
-          sx={{
-            color: 'white',
-            fontWeight: 'bolder',
-            lineHeight: isDownSm ? '1rem' : '1.2rem',
-            fontSize: isDownSm ? '1rem' : '1.2rem',
-          }}
-        >
-          검색 결과{movieData?.length === 0 ? '가 없습니다 :(' : null}
+          <Typography
+            component='span'
+            ml={1}
+            sx={{
+              color: 'white',
+              fontWeight: 'bolder',
+              lineHeight: isDownSm ? '1rem' : '1.2rem',
+              fontSize: isDownSm ? '1rem' : '1.2rem',
+            }}
+          >
+            검색 결과{movieData?.length === 0 ? '가 없습니다 :(' : null}
+          </Typography>
         </Typography>
       </Box>
 

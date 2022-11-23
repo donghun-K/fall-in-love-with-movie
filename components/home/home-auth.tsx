@@ -40,17 +40,26 @@ const HomeAuth = () => {
   const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Box>
-      <Typography
+      <Box
         sx={{
-          color: 'white',
-          fontWeight: 'bolder',
-          fontSize: isDownSm ? '1.5rem' : '2rem',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
         }}
-        ml={isDownSm ? 3 : 5}
-        mt={isDownSm ? 0 : 3}
+        mt={isDownSm ? 2 : 4}
+        mb={isDownSm ? 0 : 2}
       >
-        상영 중인 영화
-      </Typography>
+        <Typography
+          sx={{
+            color: 'white',
+            lineHeight: isDownSm ? '1.5rem' : '2rem',
+            fontSize: isDownSm ? '1.5rem' : '2rem',
+            fontWeight: 'bolder',
+          }}
+        >
+          상영 중인 영화
+        </Typography>
+      </Box>
       <Box
         sx={{
           display: 'flex',
