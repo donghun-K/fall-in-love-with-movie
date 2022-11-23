@@ -20,6 +20,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import theme from '../src/theme';
 import ChangePasswordForm from '../components/mypage/change-password-form';
+import DeleteAccountForm from '../components/mypage/delete-account-form';
 
 const MyPage = () => {
   const { data: session, status } = useSession();
@@ -141,13 +142,10 @@ const MyPage = () => {
           </ListItemButton>
           <Collapse in={openDeleteAccount} timeout='auto' unmountOnExit>
             <List component='div' disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText
-                  sx={{
-                    color: 'white',
-                  }}
-                  primary='추가 예정'
-                />
+              <ListItemButton
+                sx={{ display: 'flex', justifyContent: 'center' }}
+              >
+                <DeleteAccountForm />
               </ListItemButton>
             </List>
           </Collapse>
