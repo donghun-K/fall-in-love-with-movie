@@ -196,10 +196,10 @@ const AuthPage: NextPage = () => {
             </Typography>
             {isSignIn ? null : (
               <TextField
-                label='Username'
+                label='이름'
                 type='text'
                 variant='standard'
-                placeholder='Enter your username'
+                placeholder='이름을 입력해주세요.'
                 sx={inputSx}
                 onChange={(e) => {
                   setUserName(e.target.value);
@@ -217,10 +217,10 @@ const AuthPage: NextPage = () => {
               }}
             />
             <TextField
-              label='Password'
+              label='비밀번호'
               type='password'
               variant='standard'
-              placeholder='Enter 8 character or more'
+              placeholder='8자 이상 입력해주세요.'
               sx={inputSx}
               onChange={(e) => {
                 setUserPw(e.target.value);
@@ -228,10 +228,10 @@ const AuthPage: NextPage = () => {
             />
             {isSignIn ? null : (
               <TextField
-                label='Confirm password'
+                label='비밀번호 확인'
                 type='password'
                 variant='standard'
-                placeholder='Confirm your password'
+                placeholder='비밀번호를 한 번 더 입력해주세요.'
                 sx={inputSx}
                 onChange={(e) => {
                   setUserConfirmPw(e.target.value);
