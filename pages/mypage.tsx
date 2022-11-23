@@ -8,6 +8,7 @@ import {
   ListItemIcon,
   ListItemText,
   ListSubheader,
+  TextField,
   Typography,
   useMediaQuery,
 } from '@mui/material';
@@ -18,6 +19,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import theme from '../src/theme';
+import ChangePasswordForm from '../components/mypage/change-password-form';
 
 const MyPage = () => {
   const { data: session, status } = useSession();
@@ -104,13 +106,10 @@ const MyPage = () => {
           </ListItemButton>
           <Collapse in={openChangePassword} timeout='auto' unmountOnExit>
             <List component='div' disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText
-                  sx={{
-                    color: 'white',
-                  }}
-                  primary='추가 예정'
-                />
+              <ListItemButton
+                sx={{ display: 'flex', justifyContent: 'center' }}
+              >
+                <ChangePasswordForm />
               </ListItemButton>
             </List>
           </Collapse>
