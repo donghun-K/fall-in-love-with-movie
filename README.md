@@ -34,7 +34,7 @@
 
 ## 3. 트러블 슈팅
 <details>
-  <summary>3-1. OPEN API 요청 시 CROS 이슈</summary>
+  <summary>3-1. OPEN API 요청 시 CORS 이슈</summary>
   
   
   ### 😣 문제 상황  
